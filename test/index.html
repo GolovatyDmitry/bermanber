@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="ru" dir="ltr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Тест уровня английского — Ксения Берман</title>
+<meta name="description" content="Бесплатный тест уровня английского: 10–15 минут — и вы видите не только уровень, но и конкретные слабые места, которые мешают говорить." />
+<meta name="theme-color" content="#1d4b57" />
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="alternate" hreflang="ru" href="https://bermanber.com/test/">
+<link rel="alternate" hreflang="en" href="https://bermanber.com/test/?lang=en">
+<link rel="alternate" hreflang="he" href="https://bermanber.com/test/?lang=he">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* Цвета — как на основном сайте (../index.html) */
+  :root{
+    --bg:#f7f3ec; --panel:#fff; --panel-2:#f4efe6; --line:#e3dacb;
+    --ink:#15262d; --muted:#56676e; --accent:#1d4b57; --accent-2:#2f6b78; --warm:#e9774c;
+    --good:#2f9e6e; --mid:#e0a332; --bad:#e06a4f; --radius:18px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--ink);
+    font:16px/1.55 Rubik,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+  .top{position:sticky;top:0;z-index:5;background:rgba(247,243,236,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .top .in{max-width:640px;margin:0 auto;padding:0 18px;height:58px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .home{display:flex;align-items:center;gap:9px;text-decoration:none;color:var(--ink);font-weight:600;font-size:15px}
+  .home i{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;font-style:normal;font-size:12px}
+  .lang{display:flex;background:var(--panel-2);border-radius:999px;padding:3px}
+  .lang button{border:0;background:none;font:600 13px Rubik,sans-serif;color:var(--muted);padding:6px 11px;border-radius:999px;cursor:pointer}
+  .lang button[aria-pressed=true]{background:var(--panel);color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,.1)}
+  .wrap{max-width:640px;margin:0 auto;padding:28px 18px 64px}
+  h1{font-size:30px;line-height:1.2;margin:0 0 12px;letter-spacing:-.01em}
+  h2{font-size:20px;margin:0 0 10px}
+  p{margin:0 0 14px;color:var(--muted)}
+  .lede{color:var(--ink);font-size:18px}
+  .card{background:var(--panel);border-radius:var(--radius);padding:24px;margin:0 0 16px;box-shadow:0 8px 26px rgba(21,38,45,.07)}
+  .pill{display:inline-block;font-size:13px;font-weight:500;color:var(--accent-2);background:#e3eef0;
+    border-radius:999px;padding:4px 12px;margin-bottom:14px}
+  .q-prompt{font-size:19px;font-weight:500;color:var(--ink);margin:2px 0 16px;line-height:1.4}
+  .opts{display:flex;flex-direction:column;gap:10px}
+  .opt{display:block;width:100%;text-align:start;background:var(--panel-2);
+    border:2px solid transparent;color:var(--ink);border-radius:14px;padding:14px 16px;
+    font:16px Rubik,sans-serif;cursor:pointer;transition:.12s border-color,.12s background}
+  .opt:hover{border-color:var(--accent-2);background:#fff}
+  .opt:active{background:#e3eef0}
+  .btn{display:inline-block;background:var(--accent);color:#fff;border:none;border-radius:999px;
+    padding:14px 24px;font:600 16px Rubik,sans-serif;cursor:pointer;transition:.12s background;text-decoration:none}
+  .btn:hover{background:var(--accent-2)}
+  .btn[disabled]{opacity:.5;cursor:not-allowed}
+  .btn-ghost{background:transparent;border:2px solid var(--line);color:var(--muted);font-weight:500}
+  .btn-ghost:hover{background:transparent;border-color:var(--accent-2);color:var(--ink)}
+  .btn-wa{background:#1fa855}
+  .btn-wa:hover{background:#178f47}
+  .btn-tg{background:#2a9fd8}
+  .btn-tg:hover{background:#1f8bc0}
+  .back{background:none;border:0;color:var(--muted);font:500 15px Rubik,sans-serif;cursor:pointer;padding:4px 0;margin:0 0 10px}
+  .back:hover{color:var(--ink)}
+  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .progress{height:6px;background:var(--line);border-radius:999px;overflow:hidden;margin:0 0 22px}
+  .progress > i{display:block;height:100%;background:var(--warm);width:0;transition:.25s width}
+  .scale{display:flex;gap:8px;flex-wrap:wrap}
+  .scale .opt{flex:1;min-width:120px;text-align:center}
+  .listen{font-size:14px;font-weight:600;color:var(--accent-2);margin:0 0 4px}
+  audio{width:100%;margin:6px 0 14px}
+  .hint-btn{background:none;border:none;color:var(--accent-2);font:500 14px Rubik,sans-serif;cursor:pointer;padding:0;margin:0 0 12px;display:inline-block;text-decoration:underline}
+  .hint{background:#fdf3ec;border-radius:12px;padding:10px 14px;margin:0 0 14px;font-size:15px;color:var(--ink);line-height:1.45}
+  /* результат */
+  .bars{display:flex;flex-direction:column;gap:12px;margin:6px 0 4px}
+  .bar-row{display:grid;grid-template-columns:1fr;gap:6px}
+  .bar-label{display:flex;justify-content:space-between;font-size:15px}
+  .bar-label .st{color:var(--muted)}
+  .bar{height:10px;background:var(--panel-2);border-radius:999px;overflow:hidden}
+  .bar > i{display:block;height:100%;border-radius:999px}
+  .st-strong > i{background:var(--good)} .st-medium > i{background:var(--mid)}
+  .st-weak > i{background:var(--bad)}  .st-unchecked > i{background:#d9d1c3}
+  .locked{position:relative}
+  .locked .blur{filter:blur(6px);opacity:.6;pointer-events:none;user-select:none}
+  .lock-badge{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    font-size:15px;font-weight:500;color:var(--ink)}
+  .verdict{font-size:20px;font-weight:500;color:var(--ink);line-height:1.4;margin:0 0 8px}
+  .field{display:flex;flex-direction:column;gap:6px;margin:0 0 14px}
+  .field label{font-size:14px;color:var(--muted)}
+  input,select{background:var(--panel-2);border:2px solid transparent;color:var(--ink);
+    border-radius:12px;padding:12px 14px;font:16px Rubik,sans-serif;width:100%}
+  input:focus,select:focus{outline:none;border-color:var(--accent-2);background:#fff}
+  .prio{background:var(--panel-2);border-radius:12px;padding:14px 16px;margin:0 0 10px}
+  .prio b{color:var(--ink)}
+  .err{color:var(--bad);font-size:14px;margin:6px 0 10px}
+  .center{text-align:center}
+  .small{font-size:14px}
+  a{color:var(--accent-2)}
+  [dir=rtl] h1{letter-spacing:0}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="in">
+    <a class="home" href="../" id="home"><i>KB</i><span id="home-name">Ксения Берман</span></a>
+    <div class="lang" role="group" aria-label="Language">
+      <button data-lang="ru" aria-pressed="true">RU</button>
+      <button data-lang="en" aria-pressed="false">EN</button>
+      <button data-lang="he" aria-pressed="false">עב</button>
+    </div>
+  </div>
+</header>
+<div class="wrap">
+  <div class="progress" id="progress" hidden><i></i></div>
+  <div id="app"></div>
+</div>
+
+<!-- ==== КОНФИГ ==== -->
+<script>
+  window.CONFIG = {
+    // URL веб-приложения Google Apps Script (см. PUBLISH.md).
+    // Пусто — ответы логируются в консоль, страница работает.
+    SHEETS_ENDPOINT: "https://script.google.com/macros/s/AKfycbzHkosO19hoB2AbFYRgfA-UjAs7XYJQ4TRu1I9T3p_cyjc_dmjAflJyh0iAdU5VLb6ogQ/exec",
+    // Куда написать для бесплатного разбора. Правится здесь.
+    CONTACTS: {
+      telegram: "https://t.me/kseber",
+      whatsapp: "https://wa.me/972552873219",
+      site:     "../",
+      threads:  "https://www.threads.com/@bermanber"
+    }
+  };
+</script>
+<script src="questions.js"></script>
+<script src="engine.js"></script>
+<script>
+(function(){
+  "use strict";
+  var D = window.QUIZ_DATA, E = window.QuizEngine, CFG = window.CONFIG;
+  var app = document.getElementById("app");
+  var progress = document.getElementById("progress");
+  var session = E.createSession(D);
+  var results = null;
+
+  // ---- Тексты интерфейса. Тексты вопросов и результатов — в questions.js ----
+  var UI = {
+    ru: {
+      title: "Тест уровня английского — Ксения Берман",
+      desc: "Бесплатный тест уровня английского: 10–15 минут — и вы видите не только уровень, но и конкретные слабые места, которые мешают говорить.",
+      name: "Ксения Берман",
+      intro_pill: "10–15 минут · ничего не нужно вводить на старте",
+      h1: "Тест уровня английского",
+      lede: "В конце вы увидите не сухое «уровень B1», а что именно мешает вам говорить свободно — и с чего лучше начать.",
+      intro_small: "Вопросы подстраиваются под ваши ответы. Будет короткий блок на слух — его можно пропустить, если сейчас неудобно слушать.",
+      start: "Начать",
+      back: "← Назад",
+      ctx_pill: "Немного о вас",
+      q_pill: "Вопрос {i} из {n}",
+      listen: "Прослушайте запись",
+      hint_show: "Не понимаю вопрос", hint_hide: "Скрыть перевод",
+      skip: "Не могу слушать сейчас — пропустить",
+      cando_pill: "Про практику",
+      scale: ["Совсем нет", "Скорее нет", "Скорее да", "Уверенно да"],
+      st: {strong: "сильно", medium: "средне", weak: "слабо", unchecked: "не проверено"},
+      done: "Тест пройден.",
+      delta: "Интересно: тяжелее всего вам казалось другое — а по тесту слабее всего «{x}». Такой разрыв самооценки и факта — частая причина застоя.",
+      ready: "Ваш результат готов",
+      profile: "Профиль по 5 направлениям",
+      lock: "Полный разбор — на следующем шаге",
+      open_h: "Открыть полный разбор",
+      open_p: "Весь профиль и что чинить первым под вашу цель откроются здесь же, на этой странице. Оставьте имя и контакт — посмотрю ваш результат и предложу разобрать его голосом за 20 минут. Бесплатно и ни к чему не обязывает.",
+      f_name: "Как вас зовут", f_name_ph: "Имя", f_how: "Как с вами удобнее связаться",
+      ph: {telegram: ["Ваш ник в Telegram", "@username"], whatsapp: ["Номер WhatsApp", "+972 5X XXX XXXX"], email: ["Ваш email", "you@example.com"]},
+      submit: "Открыть разбор",
+      privacy: "Без спама и рассылок. Напишу один раз — по вашему результату.",
+      err_name: "Введите имя", err_contact: "Введите контакт", err_email: "Проверьте email",
+      sending: "Отправляю…",
+      full_pill: "Полный разбор · уровень ≈ {b}",
+      fix_h: "Что чинить первым",
+      no_weak: "Слабых мест почти нет — уровень крепкий. Разберём, как отшлифовать под цель.",
+      free_h: "Бесплатный разбор, 20 минут",
+      tg_btn: "Написать в Telegram", wa_btn: "Написать в WhatsApp",
+      more: "Больше обо мне:", site: "сайт",
+      msg: "Здравствуйте! Я прошёл(-ла) тест уровня, результат ≈ {b}. Хочу на бесплатный разбор."
+    },
+    en: {
+      title: "English Level Test — Ksenia Berman",
+      desc: "Free English level test: in 10–15 minutes see not just your level, but the specific weak spots that keep you from speaking.",
+      name: "Ksenia Berman",
+      intro_pill: "10–15 minutes · nothing to fill in to start",
+      h1: "English level test",
+      lede: "At the end you’ll see not a dry “level B1”, but what exactly keeps you from speaking freely — and where best to start.",
+      intro_small: "Questions adapt to your answers. There’s a short listening part — you can skip it if you can’t listen right now.",
+      start: "Start",
+      back: "← Back",
+      ctx_pill: "A bit about you",
+      q_pill: "Question {i} of {n}",
+      listen: "Listen to the recording",
+      hint_show: "", hint_hide: "",
+      skip: "Can’t listen right now — skip",
+      cando_pill: "In practice",
+      scale: ["Not at all", "Not really", "Mostly yes", "Definitely yes"],
+      st: {strong: "strong", medium: "medium", weak: "weak", unchecked: "not checked"},
+      done: "Test completed.",
+      delta: "Interesting: you thought something else was hardest — but the test shows “{x}” is your weakest area. A gap like this between self-assessment and reality is a common reason people get stuck.",
+      ready: "Your result is ready",
+      profile: "Your profile in 5 areas",
+      lock: "Full breakdown — on the next step",
+      open_h: "Unlock the full breakdown",
+      open_p: "The full profile and what to fix first for your goal will open right here, on this page. Leave your name and contact — I’ll look at your result and offer to go through it by voice in 20 minutes. Free, no obligation.",
+      f_name: "Your name", f_name_ph: "Name", f_how: "How should I contact you?",
+      ph: {telegram: ["Your Telegram username", "@username"], whatsapp: ["WhatsApp number", "+972 5X XXX XXXX"], email: ["Your email", "you@example.com"]},
+      submit: "Show my breakdown",
+      privacy: "No spam or newsletters. I’ll write once — about your result.",
+      err_name: "Enter your name", err_contact: "Enter your contact", err_email: "Check your email",
+      sending: "Sending…",
+      full_pill: "Full breakdown · level ≈ {b}",
+      fix_h: "What to fix first",
+      no_weak: "Almost no weak spots — your level is solid. Let’s see how to polish it for your goal.",
+      free_h: "Free 20-minute session",
+      tg_btn: "Message on Telegram", wa_btn: "Message on WhatsApp",
+      more: "More about me:", site: "website",
+      msg: "Hi! I took the level test, my result is ≈ {b}. I’d like the free session."
+    },
+    he: {
+      title: "מבחן רמה באנגלית — קסניה ברמן",
+      desc: "מבחן רמה חינמי באנגלית: תוך 10–15 דקות תראו לא רק את הרמה, אלא גם את הנקודות החלשות שמפריעות לכם לדבר.",
+      name: "קסניה ברמן",
+      intro_pill: "<bdi dir=ltr>10–15</bdi> דקות · לא צריך למלא כלום כדי להתחיל",
+      h1: "מבחן רמה באנגלית",
+      lede: "בסוף תראו לא סתם «רמה B1», אלא מה בדיוק מפריע לכם לדבר בחופשיות — ומאיפה כדאי להתחיל.",
+      intro_small: "השאלות מותאמות לתשובות שלכם. השאלות עצמן באנגלית, ולשאלות הפשוטות יש תרגום לעברית. יש חלק קצר של האזנה — אפשר לדלג עליו אם לא נוח להקשיב עכשיו.",
+      start: "להתחיל",
+      back: "→ חזרה",
+      ctx_pill: "קצת עליכם",
+      q_pill: "שאלה {i} מתוך {n}",
+      listen: "האזינו להקלטה",
+      hint_show: "תרגום השאלה", hint_hide: "להסתיר תרגום",
+      skip: "לא יכול/ה להקשיב עכשיו — לדלג",
+      cando_pill: "בפועל",
+      scale: ["בכלל לא", "לא ממש", "די כן", "בהחלט כן"],
+      st: {strong: "חזק", medium: "בינוני", weak: "חלש", unchecked: "לא נבדק"},
+      done: "המבחן הושלם.",
+      delta: "מעניין: חשבתם שמשהו אחר הכי קשה — אבל לפי המבחן התחום החלש ביותר הוא «{x}». פער כזה בין ההערכה העצמית למציאות הוא סיבה נפוצה לתקיעות.",
+      ready: "התוצאה שלכם מוכנה",
+      profile: "פרופיל ב־5 תחומים",
+      lock: "הניתוח המלא — בשלב הבא",
+      open_h: "לפתוח את הניתוח המלא",
+      open_p: "הפרופיל המלא ומה לתקן קודם לפי המטרה שלכם ייפתחו כאן, בעמוד הזה. השאירו שם ופרטי קשר — אסתכל על התוצאה ואציע לעבור עליה בשיחה קולית של 20 דקות. בחינם וללא התחייבות.",
+      f_name: "איך קוראים לכם", f_name_ph: "שם", f_how: "איך הכי נוח ליצור איתכם קשר",
+      ph: {telegram: ["שם המשתמש בטלגרם", "@username"], whatsapp: ["מספר וואטסאפ", "+972 5X XXX XXXX"], email: ["כתובת אימייל", "you@example.com"]},
+      submit: "להציג את הניתוח",
+      privacy: "בלי ספאם ודיוורים. אכתוב פעם אחת — על התוצאה שלכם.",
+      err_name: "הזינו שם", err_contact: "הזינו פרטי קשר", err_email: "בדקו את כתובת האימייל",
+      sending: "שולח…",
+      full_pill: "ניתוח מלא · רמה ≈ {b}",
+      fix_h: "במה לטפל קודם",
+      no_weak: "כמעט אין נקודות חלשות — הרמה חזקה. נראה איך ללטש אותה לפי המטרה שלכם.",
+      free_h: "שיחת ניתוח חינמית, 20 דקות",
+      tg_btn: "לכתוב בטלגרם", wa_btn: "לכתוב בוואטסאפ",
+      more: "עוד עליי:", site: "האתר",
+      msg: "שלום! עשיתי את מבחן הרמה, התוצאה ≈ {b}. אשמח לשיחת הניתוח החינמית."
+    }
+  };
+
+  // ---- язык: ?lang= из адреса, иначе выбор на сайте (общий localStorage), иначе ru ----
+  var params = new URLSearchParams(location.search);
+  var saved = null;
+  try { saved = localStorage.getItem("lang"); } catch (e) {}
+  var LANG = UI[params.get("lang")] ? params.get("lang") : (UI[saved] ? saved : "ru");
+  var L = UI[LANG];
+  function t(x){ return x && typeof x === "object" ? (x[LANG] || x.ru) : x; }  // { ru, en, he } -> строка
+  function fill(s, k, v){ return s.replace("{" + k + "}", v); }
+  var current = null; // текущий экран — перерисовываем его при смене языка
+
+  function applyLang(){
+    L = UI[LANG];
+    session.lang = LANG;
+    document.documentElement.lang = LANG;
+    document.documentElement.dir = LANG === "he" ? "rtl" : "ltr";
+    document.title = L.title;
+    document.querySelector("meta[name=description]").content = L.desc;
+    document.getElementById("home-name").textContent = L.name;
+    document.getElementById("home").href = "../" + (LANG === "ru" ? "" : "?lang=" + LANG);
+    document.querySelectorAll("[data-lang]").forEach(function(b){ b.setAttribute("aria-pressed", b.dataset.lang === LANG); });
+  }
+  document.querySelectorAll("[data-lang]").forEach(function(b){
+    b.onclick = function(){
+      LANG = b.dataset.lang;
+      try { localStorage.setItem("lang", LANG); } catch (e) {}
+      var p = new URLSearchParams(location.search);
+      if (LANG === "ru") p.delete("lang"); else p.set("lang", LANG);
+      history.replaceState(null, "", location.pathname + (p.toString() ? "?" + p : ""));
+      applyLang();
+      if (current) current();
+    };
+  });
+
+  // ---- utm / реферер из URL ----
+  var meta = {
+    utm_source: params.get("utm_source") || "",
+    utm_medium: params.get("utm_medium") || "",
+    utm_campaign: params.get("utm_campaign") || "",
+    referrer: document.referrer || "",
+    user_agent: navigator.userAgent || ""
+  };
+
+  var ctxIndex = 0;   // индекс текущего контекстного вопроса
+  var candoList = []; // выбранные can-do
+  var candoIndex = 0;
+
+  // ---- «Назад»: перед каждым ответом запоминаем состояние, кнопка его восстанавливает ----
+  var steps = [];
+  var SESSION_KEYS = ["level", "goal", "situation", "self_weak", "difficulty", "asked", "answers", "block", "axisCount", "cando"];
+  function save(screen){
+    var st = {};
+    SESSION_KEYS.forEach(function(k){ st[k] = session[k]; });
+    steps.push({s: JSON.stringify(st), ctxIndex: ctxIndex, candoIndex: candoIndex, candoList: candoList.slice(), screen: screen});
+  }
+  function goBack(){
+    var st = steps.pop();
+    if(!st){ ctxIndex = 0; screenIntro(); return; }
+    Object.assign(session, JSON.parse(st.s));
+    ctxIndex = st.ctxIndex; candoIndex = st.candoIndex; candoList = st.candoList;
+    st.screen();
+  }
+  function addBack(){
+    var b = el('<button class="back" type="button">'+L.back+'</button>');
+    b.onclick = goBack;
+    app.appendChild(b);
+  }
+
+  function setProgress(done, total){
+    progress.hidden = false;
+    progress.firstElementChild.style.width = Math.round(done/total*100) + "%";
+  }
+  function el(html){ var d=document.createElement("div"); d.innerHTML=html.trim(); return d.firstChild; }
+  function clear(){ app.innerHTML=""; }
+
+  // ======================= ЭКРАН: интро =======================
+  function screenIntro(){
+    current = screenIntro;
+    clear(); progress.hidden = true;
+    app.appendChild(el(
+      '<div>'+
+      '<span class="pill">'+L.intro_pill+'</span>'+
+      '<h1>'+L.h1+'</h1>'+
+      '<p class="lede">'+L.lede+'</p>'+
+      '<p class="small">'+L.intro_small+'</p>'+
+      '<div class="row"><button class="btn" id="start">'+L.start+'</button></div>'+
+      '</div>'
+    ));
+    document.getElementById("start").onclick = screenContext;
+  }
+
+  // ======================= БЛОК A: контекст =======================
+  function screenContext(){
+    current = screenContext;
+    var q = D.context[ctxIndex];
+    setProgress(ctxIndex, D.context.length + E.DIAGNOSTIC_COUNT + 3);
+    clear(); addBack();
+    var card = el('<div class="card"><div class="pill">'+L.ctx_pill+' · '+(ctxIndex+1)+'/'+D.context.length+'</div>'+
+      '<div class="q-prompt">'+t(q.prompt)+'</div><div class="opts"></div></div>');
+    var opts = card.querySelector(".opts");
+    q.options.forEach(function(o){
+      var b = el('<button class="opt">'+t(o.label)+'</button>');
+      b.onclick = function(){
+        save(screenContext);
+        session[q.key] = o.value;
+        ctxIndex++;
+        if(ctxIndex < D.context.length) screenContext();
+        else startDiagnostic();
+      };
+      opts.appendChild(b);
+    });
+    app.appendChild(card);
+  }
+
+  // ======================= БЛОК B: диагностика =======================
+  function startDiagnostic(){ E.setStartDifficulty(session); nextDiagnostic(); }
+
+  function nextDiagnostic(){
+    current = nextDiagnostic;
+    if(E.isDiagnosticDone(session)){ startCando(); return; }
+    var q = E.selectNext(session);
+    if(!q){ startCando(); return; }
+    var done = D.context.length + session.answers.length;
+    setProgress(done, D.context.length + E.DIAGNOSTIC_COUNT + 3);
+    clear(); addBack();
+
+    var isListen = q.axis === "listening";
+    var hint = q.hint && q.hint[LANG];
+    var card = el('<div class="card">'+
+      '<div class="pill">'+fill(fill(L.q_pill, "i", session.answers.length+1), "n", E.DIAGNOSTIC_COUNT)+'</div>'+
+      (isListen ? '<div class="listen">'+L.listen+'</div><audio controls preload="none" src="'+(q.audio||'')+'"></audio>' : '')+
+      '<div class="q-prompt" dir="ltr" lang="en">'+q.prompt+'</div>'+
+      (hint ? '<button class="hint-btn" id="hint">'+L.hint_show+'</button><div class="hint" id="hinttext" hidden>'+hint+'</div>' : '')+
+      '<div class="opts"></div>'+
+      (isListen ? '<div style="margin-top:14px"><button class="btn btn-ghost" id="skip">'+L.skip+'</button></div>' : '')+
+      '</div>');
+    var opts = card.querySelector(".opts");
+    q.options.forEach(function(text, i){
+      var b = el('<button class="opt" dir="ltr" lang="en">'+text+'</button>');
+      b.onclick = function(){ save(nextDiagnostic); E.recordAnswer(session, q, i, false); nextDiagnostic(); };
+      opts.appendChild(b);
+    });
+    if(isListen){
+      card.querySelector("#skip").onclick = function(){
+        save(nextDiagnostic); E.recordAnswer(session, q, null, true); nextDiagnostic();
+      };
+    }
+    if(hint){
+      var hb = card.querySelector("#hint");
+      hb.onclick = function(){
+        var h = card.querySelector("#hinttext");
+        h.hidden = !h.hidden;
+        hb.textContent = h.hidden ? L.hint_show : L.hint_hide;
+      };
+    }
+    app.appendChild(card);
+  }
+
+  // ======================= БЛОК C: can-do =======================
+  function startCando(){
+    candoList = E.pickCando(D, session.goal);
+    candoIndex = 0;
+    nextCando();
+  }
+  var SCORES = [0, 1, 2, 3];
+  function nextCando(){
+    current = nextCando;
+    if(candoIndex >= candoList.length){ finish(); return; }
+    var c = candoList[candoIndex];
+    var done = D.context.length + E.DIAGNOSTIC_COUNT + candoIndex;
+    setProgress(done, D.context.length + E.DIAGNOSTIC_COUNT + 3);
+    clear(); addBack();
+    var card = el('<div class="card">'+
+      '<div class="pill">'+L.cando_pill+' · '+(candoIndex+1)+'/'+candoList.length+'</div>'+
+      '<div class="q-prompt">'+t(c.text)+'</div><div class="scale"></div></div>');
+    var scale = card.querySelector(".scale");
+    SCORES.forEach(function(score){
+      var b = el('<button class="opt">'+L.scale[score]+'</button>');
+      b.onclick = function(){
+        save(nextCando);
+        // в таблицу преподавателю — по-русски, независимо от языка теста
+        session.cando.push({id:c.id, text:c.text.ru, score:score, scoreLabel:UI.ru.scale[score]});
+        candoIndex++; nextCando();
+      };
+      scale.appendChild(b);
+    });
+    app.appendChild(card);
+  }
+
+  // ======================= РЕЗУЛЬТАТ =======================
+  function finish(){
+    results = E.computeResults(session);
+    setProgress(1,1);
+    screenTeaser();
+  }
+
+  function axisBar(r){
+    var m = D.axisMeta[r.axis];
+    var pct = r.pct==null ? 0 : Math.round(r.pct*100);
+    return '<div class="bar-row">'+
+      '<div class="bar-label"><span>'+t(m.label)+'</span><span class="st">'+L.st[r.status]+'</span></div>'+
+      '<div class="bar st-'+r.status+'"><i style="width:'+(r.status==="unchecked"?100:pct)+'%"></i></div>'+
+      '</div>';
+  }
+
+  function screenTeaser(){
+    current = screenTeaser;
+    clear(); addBack();
+    var weak = results.weakest;
+    var verdict = weak ? t(D.axisMeta[weak.axis][weak.status]) : L.done;
+    // строим профиль: слабейшую ось показываем открыто, остальное — под блюром
+    var bars = results.axes.map(function(r){ return axisBar(r); }).join("");
+
+    var deltaHtml = "";
+    if(results.delta && !results.delta.match){
+      deltaHtml = '<p class="small">'+fill(L.delta, "x", t(D.axisMeta[results.delta.factAxis].label))+'</p>';
+    }
+
+    app.appendChild(el(
+      '<div>'+
+      '<span class="pill">'+L.ready+'</span>'+
+      '<div class="card">'+
+        '<p class="verdict">'+verdict+'</p>'+
+        deltaHtml+
+        '<h2 style="margin-top:18px">'+L.profile+'</h2>'+
+        '<div class="bars locked">'+
+          '<div class="blur">'+bars+'</div>'+
+          '<div class="lock-badge">'+L.lock+'</div>'+
+        '</div>'+
+      '</div>'+
+      '<div class="card">'+
+        '<h2>'+L.open_h+'</h2>'+
+        '<p>'+L.open_p+'</p>'+
+        gateFormHtml()+
+      '</div>'+
+      '</div>'
+    ));
+    wireGateForm();
+  }
+
+  function gateFormHtml(){
+    return '<form id="gate">'+
+      '<div class="field"><label for="g-name">'+L.f_name+'</label>'+
+        '<input id="g-name" type="text" autocomplete="name" placeholder="'+L.f_name_ph+'" /></div>'+
+      '<div class="field"><label for="g-type">'+L.f_how+'</label>'+
+        '<select id="g-type">'+
+          '<option value="telegram">Telegram</option>'+
+          '<option value="whatsapp">WhatsApp</option>'+
+          '<option value="email">Email</option>'+
+        '</select></div>'+
+      '<div class="field"><label id="g-vlabel" for="g-value">'+L.ph.telegram[0]+'</label>'+
+        '<input id="g-value" type="text" dir="ltr" placeholder="@username" /></div>'+
+      '<div class="err" id="g-err" hidden></div>'+
+      '<button class="btn" type="submit" id="g-submit">'+L.submit+'</button>'+
+      '<p class="small" style="margin-top:12px">'+L.privacy+'</p>'+
+    '</form>';
+  }
+
+  function wireGateForm(){
+    var type = document.getElementById("g-type");
+    var vlabel = document.getElementById("g-vlabel");
+    var value = document.getElementById("g-value");
+    type.onchange = function(){
+      var p = L.ph[type.value];
+      vlabel.textContent = p[0]; value.placeholder = p[1]; value.value="";
+      value.type = type.value==="email" ? "email" : (type.value==="whatsapp"?"tel":"text");
+    };
+    document.getElementById("gate").onsubmit = function(ev){
+      ev.preventDefault();
+      var name = document.getElementById("g-name").value.trim();
+      var tp = type.value, v = value.value.trim();
+      var err = document.getElementById("g-err");
+      if(!name){ return showErr(err, L.err_name); }
+      if(!v){ return showErr(err, L.err_contact); }
+      if(tp==="email" && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)){ return showErr(err, L.err_email); }
+      err.hidden = true;
+      submitContact({name:name, type:tp, value:v});
+    };
+  }
+  function showErr(node,msg){ node.textContent=msg; node.hidden=false; return false; }
+
+  function submitContact(contact){
+    var btn = document.getElementById("g-submit");
+    btn.disabled = true; btn.textContent = L.sending;
+    var full = Object.assign({}, contact, meta);
+    var payload = E.buildPayload(session, results, full);
+    payload.answers_detail = E.buildDetail(session, D); // для листа Answers
+    sendToSheets(payload).then(function(){
+      screenFull();
+    }).catch(function(e){
+      // даже если запись не удалась — результат пользователю показываем
+      console.error("Sheets error:", e);
+      screenFull();
+    });
+  }
+
+  // Результат уходит в два места: на сайт (кабинет Ксении + письмо, worker.mjs) и в Google-таблицу, как раньше.
+  // Ошибка любого из них не мешает показать результат.
+  function sendToSheets(payload){
+    var body = JSON.stringify(payload);
+    // api.bermanber.com — Cloudflare: сайт может лежать на другом хостинге (GitHub Pages, из-за ограничений в РФ).
+    // text/plain — простой запрос без CORS preflight (и к сайту, и к Apps Script)
+    var site = fetch("https://api.bermanber.com/api/result", {method:"POST", headers:{"Content-Type":"text/plain;charset=utf-8"}, body: body});
+    var sheets = CFG.SHEETS_ENDPOINT
+      ? fetch(CFG.SHEETS_ENDPOINT, {method:"POST", headers:{"Content-Type":"text/plain;charset=utf-8"}, body: body})
+      : Promise.resolve();
+    return Promise.allSettled([site, sheets]);
+  }
+
+  function screenFull(){
+    current = screenFull;
+    clear();
+    var C = CFG.CONTACTS;
+    var text = "?text=" + encodeURIComponent(fill(L.msg, "b", results.band));
+    var bars = results.axes.map(function(r){ return axisBar(r); }).join("");
+    var prioHtml = results.priorities.map(function(ax){
+      var m = D.axisMeta[ax];
+      return '<div class="prio"><b>'+t(m.label)+'.</b> '+t(m.fix)+'</div>';
+    }).join("");
+    var unchecked = results.axes.filter(function(r){ return r.status==="unchecked"; })
+      .map(function(r){ return '<p class="small">'+t(D.axisMeta[r.axis].unchecked)+'</p>'; }).join("");
+    var cta = t(D.goalCTA[results.goal] || D.goalCTA.general);
+
+    app.appendChild(el(
+      '<div>'+
+      '<span class="pill">'+fill(L.full_pill, "b", '<bdi dir="ltr">'+results.band+'</bdi>')+'</span>'+
+      '<div class="card">'+
+        '<h2>'+L.profile+'</h2>'+
+        '<div class="bars">'+bars+'</div>'+
+        unchecked+
+      '</div>'+
+      '<div class="card">'+
+        '<h2>'+L.fix_h+'</h2>'+
+        (prioHtml || '<p>'+L.no_weak+'</p>')+
+      '</div>'+
+      '<div class="card center">'+
+        '<h2>'+L.free_h+'</h2>'+
+        '<p>'+cta+'</p>'+
+        '<div class="row" style="justify-content:center">'+
+          '<a class="btn btn-wa" href="'+C.whatsapp+text+'" target="_blank" rel="noopener">'+L.wa_btn+'</a>'+
+          '<a class="btn btn-tg" href="'+C.telegram+text+'" target="_blank" rel="noopener">'+L.tg_btn+'</a>'+
+        '</div>'+
+        '<p class="small" style="margin-top:16px">'+L.more+' '+
+          '<a href="'+C.site+(LANG === "ru" ? "" : "?lang="+LANG)+'">'+L.site+'</a> · '+
+          '<a href="'+C.threads+'" target="_blank" rel="noopener">Threads</a></p>'+
+      '</div>'+
+      '</div>'
+    ));
+    window.scrollTo(0,0);
+  }
+
+  // старт
+  applyLang();
+  screenIntro();
+})();
+</script>
+</body>
+</html>

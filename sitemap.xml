@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url><loc>https://bermanber.com/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://bermanber.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bermanber.com/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="he" href="https://bermanber.com/?lang=he"/>
+  </url>
+  <url><loc>https://bermanber.com/?lang=en</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://bermanber.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bermanber.com/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="he" href="https://bermanber.com/?lang=he"/>
+  </url>
+  <url><loc>https://bermanber.com/?lang=he</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://bermanber.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bermanber.com/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="he" href="https://bermanber.com/?lang=he"/>
+  </url>
+  <url><loc>https://bermanber.com/test/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://bermanber.com/test/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bermanber.com/test/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="he" href="https://bermanber.com/test/?lang=he"/>
+  </url>
+  <url><loc>https://bermanber.com/test/?lang=en</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://bermanber.com/test/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bermanber.com/test/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="he" href="https://bermanber.com/test/?lang=he"/>
+  </url>
+  <url><loc>https://bermanber.com/test/?lang=he</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://bermanber.com/test/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bermanber.com/test/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="he" href="https://bermanber.com/test/?lang=he"/>
+  </url>
+</urlset>
