@@ -95,7 +95,8 @@
     return pool[0];
   }
 
-  // записать ответ (chosen = индекс варианта; skipped=true для пропуска listening)
+  // записать ответ (chosen = индекс варианта; null — «Не знаю»: считается неверным ответом;
+  // skipped=true — пропуск listening «не могу слушать», на счёт не влияет)
   function recordAnswer(session, q, chosen, skipped) {
     var correct = skipped ? null : (chosen === q.answer);
     session.answers.push({ id: q.id, axis: q.axis, level: q.level, correct: correct, skipped: !!skipped, chosen: skipped ? null : chosen });
@@ -120,7 +121,8 @@
     else if (ratio <= 0.34) session.difficulty = down(session.difficulty);
   }
 
-  // ответ в блоке базовой грамматики: без адаптации сложности и без счёта в 12 диагностических
+  // ответ в блоке базовой грамматики: без адаптации сложности и без счёта в 12 диагностических.
+  // chosen = null — «Не знаю» (неверно)
   function recordBasic(session, q, chosen) {
     session.basics.push({ id: q.id, axis: q.axis, level: q.level, correct: chosen === q.answer, skipped: false, chosen: chosen });
   }
@@ -252,7 +254,7 @@
       vocab_pct: axisPct.vocab,
       cando: session.cando.map(function (c) { return c.id + ":" + c.score; }).join("|"),
       answers: session.basics.concat(session.answers).map(function (a) {
-        return a.id + ":" + (a.skipped ? "skip" : (a.correct ? "1" : "0"));
+        return a.id + ":" + (a.skipped ? "skip" : a.chosen == null ? "dk" : (a.correct ? "1" : "0"));
       }).join("|"),
       utm_source: contact.utm_source || "",
       utm_medium: contact.utm_medium || "",
@@ -280,9 +282,9 @@
         axis: axisLabel,
         level: a.level,
         question: q.prompt,
-        answer: a.skipped ? "— пропущено —" : q.options[a.chosen],
+        answer: a.skipped ? "— пропущено —" : a.chosen == null ? "— не знаю —" : q.options[a.chosen],
         correct: q.options[q.answer],
-        result: a.skipped ? "пропущено" : (a.correct ? "верно" : "неверно")
+        result: a.skipped ? "пропущено" : a.chosen == null ? "не знаю" : (a.correct ? "верно" : "неверно")
       });
     });
     // устная часть: key — id записи в KV, кабинет показывает плеер

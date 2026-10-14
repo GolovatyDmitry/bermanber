@@ -50,6 +50,8 @@
     font:16px Rubik,sans-serif;cursor:pointer;transition:.12s border-color,.12s background}
   .opt:hover{border-color:var(--accent-2);background:#fff}
   .opt:active{background:#e3eef0}
+  .opt-dk{background:transparent;border:2px dashed var(--line);color:var(--muted)}
+  .opt-dk:hover{background:transparent}
   .btn{display:inline-block;background:var(--accent);color:#fff;border:none;border-radius:999px;
     padding:14px 24px;font:600 16px Rubik,sans-serif;cursor:pointer;transition:.12s background;text-decoration:none}
   .btn:hover{background:var(--accent-2)}
@@ -124,6 +126,8 @@
   window.CONFIG = {
     // URL веб-приложения Google Apps Script (см. PUBLISH.md).
     // Пусто — ответы логируются в консоль, страница работает.
+    // Запасной приём голосовых ответов: Apps Script → Google Диск (drive-audio/Code.gs, README).
+    DRIVE_AUDIO: "https://script.google.com/macros/s/AKfycbwC0VAQ4tG226o5FXMxzQSxAW8MhOmMeIbTBrO-DtfArEfklKq_5MxDeVCBKbBxFl01Lw/exec",
     SHEETS_ENDPOINT: "https://script.google.com/macros/s/AKfycbzHkosO19hoB2AbFYRgfA-UjAs7XYJQ4TRu1I9T3p_cyjc_dmjAflJyh0iAdU5VLb6ogQ/exec",
     // Куда написать для бесплатного разбора. Правится здесь.
     CONTACTS: {
@@ -161,6 +165,7 @@
       q_pill: "Вопрос {i} из {n}",
       listen: "Прослушайте запись",
       hint_show: "Не понимаю вопрос", hint_hide: "Скрыть перевод",
+      dont_know: "Не знаю",
       skip: "Не могу слушать сейчас — пропустить",
       sp_pill: "Устная часть",
       sp_intro: "Ответьте вслух, как в разговоре: 2–4 предложения, до 1,5 минуты. Браузер попросит доступ к микрофону. Запись услышу только я. Если сейчас неудобно — пропустите.",
@@ -205,6 +210,7 @@
       q_pill: "Question {i} of {n}",
       listen: "Listen to the recording",
       hint_show: "", hint_hide: "",
+      dont_know: "I don’t know",
       skip: "Can’t listen right now — skip",
       sp_pill: "Speaking",
       sp_intro: "Answer out loud, as in a conversation: 2–4 sentences, up to 1.5 minutes. Your browser will ask for microphone access. Only I will hear the recording. If now isn’t convenient, skip it.",
@@ -249,6 +255,7 @@
       q_pill: "שאלה {i} מתוך {n}",
       listen: "האזינו להקלטה",
       hint_show: "תרגום השאלה", hint_hide: "להסתיר תרגום",
+      dont_know: "לא יודע/ת",
       skip: "לא יכול/ה להקשיב עכשיו — לדלג",
       sp_pill: "חלק בעל פה",
       sp_intro: "ענו בקול, כמו בשיחה: <bdi dir=ltr>2–4</bdi> משפטים, עד דקה וחצי. הדפדפן יבקש גישה למיקרופון. רק אני אשמע את ההקלטה. אם לא נוח עכשיו — אפשר לדלג.",
@@ -289,6 +296,15 @@
   var L = UI[LANG];
   function t(x){ return x && typeof x === "object" ? (x[LANG] || x.ru) : x; }  // { ru, en, he } -> строка
   function fill(s, k, v){ return s.replace("{" + k + "}", v); }
+
+  // ---- Google Analytics: шаги теста (gtag — из /ga.js). Локально не шлём, только в консоль ----
+  var LOCAL = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+  function track(name, params){
+    if(LOCAL || !window.gtag){ console.log("ga:", name, params || {}); return; }
+    gtag("event", name, params || {});
+  }
+  var tracked = {}; // шаги воронки — один раз за прохождение, даже если ходили «Назад»
+  function trackOnce(name, params){ if(!tracked[name]){ tracked[name] = 1; track(name, params); } }
   var current = null; // текущий экран — перерисовываем его при смене языка
 
   function applyLang(){
@@ -373,7 +389,7 @@
       '<div class="row"><button class="btn" id="start">'+L.start+'</button></div>'+
       '</div>'
     ));
-    document.getElementById("start").onclick = screenContext;
+    document.getElementById("start").onclick = function(){ trackOnce("test_start", {test_lang: LANG}); screenContext(); };
   }
 
   // ======================= БЛОК A: контекст =======================
@@ -403,7 +419,7 @@
   function nextBasic(){
     current = nextBasic;
     var i = session.basics.length;
-    if(i >= D.basics.length){ startDiagnostic(); return; }
+    if(i >= D.basics.length){ trackOnce("test_basics_done"); startDiagnostic(); return; }
     var q = D.basics[i];
     setProgress(D.context.length + i, TOTAL);
     questionCard(q, i + 1, function(chosen){ save(nextBasic); E.recordBasic(session, q, chosen); nextBasic(); });
@@ -456,6 +472,10 @@
       b.onclick = function(){ onAnswer(i, false); };
       opts.appendChild(b);
     });
+    // «Не знаю» — чтобы не тыкали наугад; считается неверным ответом
+    var dk = el('<button class="opt opt-dk">'+L.dont_know+'</button>');
+    dk.onclick = function(){ onAnswer(null, false); };
+    opts.appendChild(dk);
     if(isListen) card.querySelector("#skip").onclick = function(){ onAnswer(null, true); };
     wireHint(card);
     app.appendChild(card);
@@ -468,7 +488,7 @@
   var REC_MAX = 90;    // секунд на ответ, потом запись останавливается сама
   function mmss(sec){ return Math.floor(sec/60) + ":" + ("0" + sec%60).slice(-2); }
 
-  function startSpeaking(){ spIndex = spStart = E.speakingStart(session); nextSpeaking(); }
+  function startSpeaking(){ trackOnce("test_diagnostic_done"); spIndex = spStart = E.speakingStart(session); nextSpeaking(); }
 
   function nextSpeaking(){
     current = nextSpeaking;
@@ -495,6 +515,7 @@
     save(nextSpeaking);
     stopRec(false);
     session.speaking.push({id: q.id, prompt: q.prompt, status: status});
+    track("speaking_answer", {action: status});
     spIndex++; nextSpeaking();
   }
 
@@ -513,7 +534,7 @@
   }
 
   function startRec(box, q){
-    if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia || !window.MediaRecorder){ renderRec(box, q, L.sp_nomic); return; }
+    if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia || !window.MediaRecorder){ track("mic_error", {error: "unsupported"}); renderRec(box, q, L.sp_nomic); return; }
     navigator.mediaDevices.getUserMedia({audio: true}).then(function(stream){
       if(!box.isConnected){ stream.getTracks().forEach(function(t){ t.stop(); }); return; } // ушли с экрана, пока браузер спрашивал
       // Chrome/Firefox пишут webm (opus), Safari — mp4 (aac). 32 кбит/с: 1,5 минуты ≈ 360 КБ
@@ -541,7 +562,7 @@
       }, 500);
       mr.start();
       renderRec(box, q);
-    }).catch(function(){ if(box.isConnected) renderRec(box, q, L.sp_nomic); });
+    }).catch(function(e){ track("mic_error", {error: e && e.name || ""}); if(box.isConnected) renderRec(box, q, L.sp_nomic); });
   }
 
   // keep=false — запись выбрасываем (ушли с экрана, сменили язык, пропустили)
@@ -554,25 +575,47 @@
     r.stream.getTracks().forEach(function(t){ t.stop(); });
   }
 
-  // отправить записи; у каждой — id в хранилище (key) или пустая строка, если не дошла
+  // отправить записи; у каждой — id (key) или пустая строка, если не дошла.
+  // Сначала Cloudflare; не ответил за 20 с или ошибка (так бывает из РФ) — Google Диск через Apps Script, id с приставкой "g:".
   function uploadAudio(){
     return Promise.all(session.speaking.map(function(sp){
       var a = audioBlobs[sp.id];
       if(sp.status !== "recorded" || !a) return null;
-      var ctl = window.AbortController ? new AbortController() : null;
-      var tm = ctl && setTimeout(function(){ ctl.abort(); }, 45000);
       // text/plain — простой запрос без CORS preflight; настоящий тип записи — в ?t=
-      return fetch("https://api.bermanber.com/api/audio?t=" + a.ext,
-          {method: "POST", headers: {"Content-Type": "text/plain"}, body: a.blob, signal: ctl ? ctl.signal : undefined})
-        .then(function(res){ return res.json(); })
-        .then(function(j){ sp.key = j && j.ok ? j.id : ""; })
-        .catch(function(e){ console.error("audio upload:", e); sp.key = ""; })
-        .then(function(){ clearTimeout(tm); });
+      return postJson("https://api.bermanber.com/api/audio?t=" + a.ext, a.blob, 20000)
+        .then(function(j){ track("audio_upload", {route: "cloudflare"}); return j.id; })
+        .catch(function(e){
+          console.error("audio upload (cloudflare):", e);
+          if(!CFG.DRIVE_AUDIO) throw e;
+          return toBase64(a.blob).then(function(data){
+            return postJson(CFG.DRIVE_AUDIO, JSON.stringify({type: a.ext, data: data}), 60000);
+          }).then(function(j){ track("audio_upload", {route: "drive"}); return "g:" + j.id; });
+        })
+        .then(function(id){ sp.key = id; },
+              function(e){ console.error("audio upload:", e); track("audio_upload", {route: "failed"}); sp.key = ""; });
     }));
+  }
+  // POST с таймаутом; успех — только ответ {ok: true, id}
+  function postJson(url, body, ms){
+    var ctl = window.AbortController ? new AbortController() : null;
+    var tm = ctl && setTimeout(function(){ ctl.abort(); }, ms);
+    return fetch(url, {method: "POST", headers: {"Content-Type": "text/plain;charset=utf-8"}, body: body, signal: ctl ? ctl.signal : undefined})
+      .then(function(res){ return res.json(); })
+      .then(function(j){ clearTimeout(tm); if(!j || !j.ok || !j.id) throw new Error("upload: " + JSON.stringify(j)); return j; },
+            function(e){ clearTimeout(tm); throw e; });
+  }
+  function toBase64(blob){
+    return new Promise(function(ok, fail){
+      var r = new FileReader();
+      r.onload = function(){ ok(String(r.result).split(",")[1] || ""); };
+      r.onerror = fail;
+      r.readAsDataURL(blob);
+    });
   }
 
   // ======================= БЛОК C: can-do =======================
   function startCando(){
+    trackOnce("test_speaking_done", {recorded: session.speaking.filter(function(sp){ return sp.status === "recorded"; }).length});
     candoList = E.pickCando(D, session.goal);
     candoIndex = 0;
     nextCando();
@@ -604,6 +647,7 @@
   // ======================= РЕЗУЛЬТАТ =======================
   function finish(){
     results = E.computeResults(session);
+    trackOnce("test_complete", {band: results.band});
     setProgress(1,1);
     screenTeaser();
   }
@@ -696,6 +740,7 @@
   function submitContact(contact){
     var btn = document.getElementById("g-submit");
     btn.disabled = true;
+    trackOnce("generate_lead", {band: results.band, contact_type: contact.type}); // без имени и контакта
     btn.textContent = session.speaking.some(function(sp){ return sp.status === "recorded"; }) ? L.sending_audio : L.sending;
     var full = Object.assign({}, contact, meta);
     uploadAudio().then(function(){

@@ -10,8 +10,9 @@
    langs — на каком языке интерфейса показывать вопрос. НЕТ поля = на всех.
            Кальки с русского — ["ru","en"], кальки с иврита — ["he"].
    hint — перевод ФОРМУЛИРОВКИ вопроса (не вариантов!) по кнопке «Не понимаю
-          вопрос»: { ru, he }. Есть у starter и easy вопросов. В английском
-          интерфейсе подсказки нет — вопрос и так на английском.
+          вопрос»: { ru, he }. Есть у всех вопросов (с 14.10.2026); у калек — только
+          на языке их интерфейса. В английском интерфейсе подсказки нет — вопрос и так
+          на английском. Подсказка не должна выдавать ответ.
    Тексты интерфейса и результатов — объекты { ru, en, he }.
    Сами вопросы и варианты — на английском, одинаковые для всех языков.
    Проверка после правок: node test/check.js
@@ -203,15 +204,23 @@ window.QUIZ_DATA = {
       options: ["will have", "have", "had", "would have"], answer: 1 },
     { id: "gr_c1", axis: "grammar", level: "core",
       prompt: "Choose the correct option: “By the time it started, she ___ the work.”",
+      hint: { ru: "Выберите вариант: «By the time it started, she ___ the work» (К тому времени, как это началось, она ___ работу).",
+              he: "בחרו אפשרות: «By the time it started, she ___ the work» (עד שזה התחיל, היא ___ את העבודה)." },
       options: ["finished", "has finished", "had finished", "was finishing"], answer: 2 },
     { id: "gr_c2", axis: "grammar", level: "core",
       prompt: "Choose the correct option: “I wish I ___ more confident when I speak.”",
+      hint: { ru: "Выберите вариант: «I wish I ___ more confident when I speak» (Жаль, что я не так уверен(а) в себе, когда говорю).",
+              he: "בחרו אפשרות: «I wish I ___ more confident when I speak» (הלוואי שהייתי בטוח/ה יותר בעצמי כשאני מדבר/ת)." },
       options: ["am", "was", "were", "would be"], answer: 2 },
     { id: "gr_h1", axis: "grammar", level: "hard",
       prompt: "Choose the correct option: “___ harder, he would have passed.”",
+      hint: { ru: "Выберите вариант: «___ harder, he would have passed» (Если бы он занимался усерднее, он бы сдал).",
+              he: "בחרו אפשרות: «___ harder, he would have passed» (אילו למד יותר, הוא היה עובר)." },
       options: ["If he studies", "Had he studied", "Has he studied", "Would he study"], answer: 1 },
     { id: "gr_h2", axis: "grammar", level: "hard",
       prompt: "Choose the correct option: “It’s high time we ___ this properly.”",
+      hint: { ru: "Выберите вариант: «It’s high time we ___ this properly» (Давно пора нам как следует этим заняться).",
+              he: "בחרו אפשרות: «It’s high time we ___ this properly» (הגיע הזמן שנטפל בזה כמו שצריך)." },
       options: ["address", "addressed", "will address", "have addressed"], answer: 1 },
 
     /* ---------- CALQUE: кальки с русского (интерфейс RU и EN) ---------- */
@@ -233,18 +242,23 @@ window.QUIZ_DATA = {
       options: ["“I am interesting in music.”", "“I am interested in music.”"], answer: 1 },
     { id: "cq_e1", axis: "calque", level: "core", langs: ["ru", "en"],
       prompt: "Which sentence sounds natural to a native speaker?",
+      hint: { ru: "Какое предложение звучит естественно для носителя языка?" },
       options: ["“I feel myself good today.”", "“I feel good today.”"], answer: 1 },
     { id: "cq_c1", axis: "calque", level: "core", langs: ["ru", "en"],
       prompt: "Which one is correct English (not a direct translation)?",
+      hint: { ru: "Какой вариант — правильный английский, а не дословный перевод?" },
       options: ["“I have a possibility to come.”", "“I have the opportunity to come.”", "“I have possibility for come.”"], answer: 1 },
     { id: "cq_c2", axis: "calque", level: "core", langs: ["ru", "en"],
       prompt: "Choose the natural question:",
+      hint: { ru: "Выберите вопрос, который звучит естественно." },
       options: ["“How do you call this in English?”", "“What do you call this in English?”"], answer: 1 },
     { id: "cq_h1", axis: "calque", level: "hard", langs: ["ru", "en"],
       prompt: "Which sentence sounds native?",
+      hint: { ru: "Какое предложение звучит как у носителя языка?" },
       options: ["“Please, make attention to this.”", "“Please pay attention to this.”"], answer: 1 },
     { id: "cq_h2", axis: "calque", level: "hard", langs: ["ru", "en"],
       prompt: "Pick the version a native speaker would actually say:",
+      hint: { ru: "Выберите вариант, который носитель языка действительно сказал бы." },
       options: ["“I live here already 3 years and I very like it.”", "“I’ve lived here for 3 years and I really like it.”"], answer: 1 },
 
     /* ---------- CALQUE: кальки с иврита (интерфейс HE) ----------
@@ -269,18 +283,23 @@ window.QUIZ_DATA = {
       options: ["“I’m waiting to you.”", "“I’m waiting for you.”"], answer: 1 },
     { id: "hcq_c1", axis: "calque", level: "core", langs: ["he"],
       prompt: "Which sentence sounds natural to a native speaker?",
+      hint: { he: "איזה משפט נשמע טבעי לדובר/ת ילידי/ת?" },
       options: ["“He did a big mistake.”", "“He made a big mistake.”"], answer: 1 },
     { id: "hcq_c2", axis: "calque", level: "core", langs: ["he"],
       prompt: "Which one is correct English (not a direct translation)?",
+      hint: { he: "איזו אפשרות היא אנגלית נכונה (ולא תרגום מילולי)?" },
       options: ["“Give me to see the photo.”", "“Let me see the photo.”", "“Give me see the photo.”"], answer: 1 },
     { id: "hcq_c3", axis: "calque", level: "core", langs: ["he"],
       prompt: "Choose the natural sentence:",
+      hint: { he: "בחרו את המשפט שנשמע טבעי." },
       options: ["“He explained me the rules.”", "“He explained the rules to me.”"], answer: 1 },
     { id: "hcq_h1", axis: "calque", level: "hard", langs: ["he"],
       prompt: "Which sentence sounds native?",
+      hint: { he: "איזה משפט נשמע כמו של דובר/ת ילידי/ת?" },
       options: ["“I didn’t succeed to finish the report.”", "“I didn’t manage to finish the report.”"], answer: 1 },
     { id: "hcq_h2", axis: "calque", level: "hard", langs: ["he"],
       prompt: "Pick the version a native speaker would actually say:",
+      hint: { he: "בחרו את הגרסה שדובר/ת ילידי/ת באמת היה אומר/ת." },
       options: ["“I live in Tel Aviv already five years and it’s depend on the job if I stay.”", "“I’ve lived in Tel Aviv for five years, and whether I stay depends on the job.”"], answer: 1 },
 
     /* ---------- REGISTER: простые (A2–B1) ---------- */
@@ -308,6 +327,8 @@ window.QUIZ_DATA = {
     /* ---------- REGISTER: универсальные (B1–B2) ---------- */
     { id: "rg_e1", axis: "register", level: "core",
       prompt: "Someone suggests an idea you disagree with. The most polite reply:",
+      hint: { ru: "Вам предлагают идею, с которой вы не согласны. Какой ответ самый вежливый?",
+              he: "מישהו מציע רעיון שאתם לא מסכימים איתו. מה התשובה הכי מנומסת?" },
       options: [
         "“No, that’s wrong.”",
         "“I see your point, but I’m not sure that would work.”",
@@ -316,6 +337,8 @@ window.QUIZ_DATA = {
       ], answer: 1 },
     { id: "rg_c1", axis: "register", level: "core",
       prompt: "You need someone to send you a file. The most natural, polite way:",
+      hint: { ru: "Вам нужно, чтобы вам прислали файл. Как попросить естественно и вежливо?",
+              he: "אתם צריכים שישלחו לכם קובץ. איך לבקש בצורה טבעית ומנומסת?" },
       options: [
         "“Send me the file.”",
         "“I want the file now.”",
@@ -326,6 +349,8 @@ window.QUIZ_DATA = {
     /* ---------- REGISTER: работа/интервью ---------- */
     { id: "rg_c2", axis: "register", level: "core", goals: ["interview", "team"],
       prompt: "You must tell a client something can’t be done on time. The best option:",
+      hint: { ru: "Нужно сказать клиенту, что к сроку сделать не получится. Какой вариант лучше?",
+              he: "צריך להגיד ללקוח שלא יספיקו בזמן. מה האפשרות הכי טובה?" },
       options: [
         "“We can’t do it.”",
         "“It is impossible.”",
@@ -334,6 +359,8 @@ window.QUIZ_DATA = {
       ], answer: 2 },
     { id: "rg_h1", axis: "register", level: "hard", goals: ["interview", "team"],
       prompt: "You want to push back on a tight deadline without sounding rigid:",
+      hint: { ru: "Вы хотите возразить против слишком жёсткого срока, но не звучать категорично. Как сказать?",
+              he: "אתם רוצים להתנגד לדדליין צפוף בלי להישמע נוקשים. איך לומר?" },
       options: [
         "“The deadline is impossible.”",
         "“I’m afraid the timeline may be tight — could we move it by a couple of days?”",
@@ -344,6 +371,8 @@ window.QUIZ_DATA = {
     /* ---------- REGISTER: повседневный ---------- */
     { id: "rg_gen1", axis: "register", level: "core", goals: ["general"],
       prompt: "A friend asks you to help them move on Saturday, but you’re busy. A friendly way to say no:",
+      hint: { ru: "Друг просит помочь с переездом в субботу, а вы заняты. Как дружелюбно отказать?",
+              he: "חבר מבקש עזרה במעבר דירה בשבת, ואתם עסוקים. איך לסרב בצורה ידידותית?" },
       options: [
         "“No, I can’t.”",
         "“I’d love to, but I’m tied up on Saturday — maybe another time?”",
@@ -352,6 +381,8 @@ window.QUIZ_DATA = {
       ], answer: 1 },
     { id: "rg_gen2", axis: "register", level: "core", goals: ["general"],
       prompt: "You didn’t hear what someone said at a noisy party. The most natural:",
+      hint: { ru: "На шумной вечеринке вы не расслышали, что вам сказали. Как естественнее переспросить?",
+              he: "במסיבה רועשת לא שמעתם מה אמרו לכם. מה הכי טבעי לומר?" },
       options: [
         "“Repeat please.”",
         "“What?”",
@@ -361,6 +392,8 @@ window.QUIZ_DATA = {
 
     { id: "rg_gen3", axis: "register", level: "hard", goals: ["general"],
       prompt: "Your neighbour’s music is too loud late at night. The most tactful way to ask:",
+      hint: { ru: "У соседей громкая музыка поздно вечером. Как попросить тактичнее всего?",
+              he: "אצל השכנים מוזיקה רועשת מאוחר בלילה. איך לבקש בצורה הכי עדינה?" },
       options: [
         "“Turn it down.”",
         "“Your music is too loud.”",
@@ -371,6 +404,8 @@ window.QUIZ_DATA = {
     /* ---------- REGISTER: экзамен ---------- */
     { id: "rg_exam1", axis: "register", level: "core", goals: ["exam"],
       prompt: "In a formal essay, which phrase is most appropriate?",
+      hint: { ru: "Какая фраза уместнее всего в официальном эссе?",
+              he: "איזה ביטוי הכי מתאים בחיבור רשמי?" },
       options: [
         "“Lots of people think that…”",
         "“It is widely believed that…”",
@@ -391,11 +426,15 @@ window.QUIZ_DATA = {
       options: ["do", "make", "take", "give"], answer: 1 },
     { id: "vc_c2", axis: "vocab", level: "core",
       prompt: "Choose the natural collocation: “We need to ___ this issue before the deadline.”",
+      hint: { ru: "Выберите естественное сочетание: «We need to ___ this issue before the deadline» (Нам нужно ___ этот вопрос до дедлайна).",
+              he: "בחרו את הצירוף הטבעי: «We need to ___ this issue before the deadline» (אנחנו צריכים ___ את העניין הזה לפני הדדליין)." },
       options: ["decide", "solute", "resolve", "make"], answer: 2 },
 
     /* ---------- VOCAB: работа/интервью ---------- */
     { id: "vc_c1", axis: "vocab", level: "core", goals: ["interview", "team"],
       prompt: "“Tell me about yourself.” The strongest opening in an interview:",
+      hint: { ru: "«Расскажите о себе». Какое начало ответа на собеседовании самое сильное?",
+              he: "«ספרו על עצמכם». מה הפתיחה הכי חזקה בראיון עבודה?" },
       options: [
         "“I was born in 1990 in…”",
         "“I’m a specialist with five years of experience in…”",
@@ -404,26 +443,38 @@ window.QUIZ_DATA = {
       ], answer: 1 },
     { id: "vc_h1", axis: "vocab", level: "hard", goals: ["interview", "team"],
       prompt: "“The project is behind schedule — we need to ___.” Choose the idiom:",
+      hint: { ru: "«Проект отстаёт от графика — нам нужно ___». Выберите идиому.",
+              he: "«הפרויקט מפגר אחרי לוח הזמנים — אנחנו צריכים ___». בחרו את הביטוי." },
       options: ["catch on", "catch up", "catch out", "keep on"], answer: 1 },
     { id: "vc_h2", axis: "vocab", level: "hard", goals: ["interview", "team"],
       prompt: "In a meeting: “Let’s ___ and look at the bigger picture.” Choose the phrase:",
+      hint: { ru: "На встрече: «Давайте ___ и посмотрим на картину в целом». Выберите фразу.",
+              he: "בפגישה: «בואו ___ ונסתכל על התמונה הגדולה». בחרו את הביטוי." },
       options: ["step on it", "take a step back", "back off", "step down"], answer: 1 },
 
     /* ---------- VOCAB: повседневный ---------- */
     { id: "vc_gen2", axis: "vocab", level: "core", goals: ["general"],
       prompt: "Choose the phrasal verb: “I can’t ___ what this word means.”",
+      hint: { ru: "Выберите фразовый глагол: «Я не могу ___, что значит это слово».",
+              he: "בחרו פועל: «אני לא מצליח/ה ___ מה המילה הזאת אומרת»." },
       options: ["work out", "work on", "work up", "work in"], answer: 0 },
 
     { id: "vc_gen3", axis: "vocab", level: "hard", goals: ["general"],
       prompt: "“I’m exhausted — I’m not really ___ going out tonight.” Choose the phrase:",
+      hint: { ru: "«Я без сил — сегодня мне не очень ___ куда-то идти». Выберите фразу.",
+              he: "«אני גמור/ה — אין לי ממש ___ לצאת הערב». בחרו את הביטוי." },
       options: ["up for", "up to", "out of", "down with"], answer: 0 },
 
     /* ---------- VOCAB: экзамен ---------- */
     { id: "vc_exam1", axis: "vocab", level: "core", goals: ["exam"],
       prompt: "Choose the linking word for a formal text: “___, the evidence was inconclusive.”",
+      hint: { ru: "Выберите связку для официального текста: «___, данные оказались неубедительными».",
+              he: "בחרו מילת קישור לטקסט רשמי: «___, הנתונים לא היו חד־משמעיים»." },
       options: ["But", "However", "So", "Also"], answer: 1 },
     { id: "vc_exam2", axis: "vocab", level: "hard", goals: ["exam"],
       prompt: "Choose the academic collocation: “The study aims to ___ the hypothesis.”",
+      hint: { ru: "Выберите академическое сочетание: «Исследование ставит целью ___ гипотезу».",
+              he: "בחרו צירוף אקדמי: «המחקר נועד ___ את ההשערה»." },
       options: ["prove", "test", "check", "control"], answer: 1 },
 
     /* ---------- LISTENING (аудио, скипаемые) ---------- */
@@ -435,10 +486,14 @@ window.QUIZ_DATA = {
       transcript: "Hey, could we meet at two in the afternoon? The morning’s completely packed for me." },
     { id: "ls_c1", axis: "listening", level: "core", audio: "audio/listen_core.mp3",
       prompt: "What is the speaker waiting for?",
+      hint: { ru: "Чего ждёт говорящий?",
+              he: "למה הדובר/ת מחכה?" },
       options: ["Design approval", "A delivery", "A phone call back", "A refund"], answer: 0,
       transcript: "I’ve finished my part, but I’m stuck — I’m still waiting for the design to be signed off before I can keep going." },
     { id: "ls_h1", axis: "listening", level: "hard", audio: "audio/listen_hard.mp3",
       prompt: "What does the speaker want changed?",
+      hint: { ru: "Что говорящий хочет изменить?",
+              he: "מה הדובר/ת רוצה לשנות?" },
       options: [
         "A lower price",
         "Updates weekly instead of monthly",

@@ -5,6 +5,7 @@ worker.mjs
 worker.check.mjs
 .assetsignore
 test/check.js
+drive-audio/
 .wrangler/
 .dev.vars
 node_modules/
