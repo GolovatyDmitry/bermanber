@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Тест уровня английского — Ксения Берман</title>
-<meta name="description" content="Бесплатный тест уровня английского: 10–15 минут — и вы видите не только уровень, но и конкретные слабые места, которые мешают говорить." />
+<meta name="description" content="Бесплатный тест уровня английского: 15–20 минут — и вы видите не только уровень, но и конкретные слабые места, которые мешают говорить." />
 <meta name="theme-color" content="#1d4b57" />
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -70,6 +70,10 @@
   .listen{font-size:14px;font-weight:600;color:var(--accent-2);margin:0 0 4px}
   audio{width:100%;margin:6px 0 14px}
   .hint-btn{background:none;border:none;color:var(--accent-2);font:500 14px Rubik,sans-serif;cursor:pointer;padding:0;margin:0 0 12px;display:inline-block;text-decoration:underline}
+  .rec-on{display:flex;align-items:center;gap:8px;color:var(--bad);font-weight:500;margin:0 0 12px}
+  .rec-on i{width:10px;height:10px;border-radius:50%;background:var(--bad);animation:blink 1s infinite}
+  @keyframes blink{50%{opacity:.3}}
+  @media (prefers-reduced-motion:reduce){.rec-on i{animation:none}}
   .hint{background:#fdf3ec;border-radius:12px;padding:10px 14px;margin:0 0 14px;font-size:15px;color:var(--ink);line-height:1.45}
   /* результат */
   .bars{display:flex;flex-direction:column;gap:12px;margin:6px 0 4px}
@@ -145,12 +149,12 @@
   var UI = {
     ru: {
       title: "Тест уровня английского — Ксения Берман",
-      desc: "Бесплатный тест уровня английского: 10–15 минут — и вы видите не только уровень, но и конкретные слабые места, которые мешают говорить.",
+      desc: "Бесплатный тест уровня английского: 15–20 минут — и вы видите не только уровень, но и конкретные слабые места, которые мешают говорить.",
       name: "Ксения Берман",
-      intro_pill: "10–15 минут · ничего не нужно вводить на старте",
+      intro_pill: "15–20 минут · ничего не нужно вводить на старте",
       h1: "Тест уровня английского",
       lede: "В конце вы увидите не сухое «уровень B1», а что именно мешает вам говорить свободно — и с чего лучше начать.",
-      intro_small: "Вопросы подстраиваются под ваши ответы. Будет короткий блок на слух — его можно пропустить, если сейчас неудобно слушать.",
+      intro_small: "Вопросы подстраиваются под ваши ответы. Будет короткий блок на слух и несколько вопросов, на которые нужно ответить голосом. Их можно пропустить, если сейчас неудобно.",
       start: "Начать",
       back: "← Назад",
       ctx_pill: "Немного о вас",
@@ -158,13 +162,18 @@
       listen: "Прослушайте запись",
       hint_show: "Не понимаю вопрос", hint_hide: "Скрыть перевод",
       skip: "Не могу слушать сейчас — пропустить",
+      sp_pill: "Устная часть",
+      sp_intro: "Ответьте вслух, как в разговоре: 2–4 предложения, до 1,5 минуты. Браузер попросит доступ к микрофону. Запись услышу только я. Если сейчас неудобно — пропустите.",
+      sp_record: "● Записать ответ", sp_stop: "■ Остановить", sp_recording: "Идёт запись", sp_again: "Записать заново", sp_next: "Дальше", sp_skip: "Пропустить вопрос",
+      sp_nomic: "Микрофон недоступен. Разрешите доступ к микрофону в браузере или пропустите вопрос.",
+      sending_audio: "Отправляю записи…",
       cando_pill: "Про практику",
       scale: ["Совсем нет", "Скорее нет", "Скорее да", "Уверенно да"],
       st: {strong: "сильно", medium: "средне", weak: "слабо", unchecked: "не проверено"},
       done: "Тест пройден.",
       delta: "Интересно: тяжелее всего вам казалось другое — а по тесту слабее всего «{x}». Такой разрыв самооценки и факта — частая причина застоя.",
       ready: "Ваш результат готов",
-      profile: "Профиль по 5 направлениям",
+      profile: "Профиль по 6 направлениям",
       lock: "Полный разбор — на следующем шаге",
       open_h: "Открыть полный разбор",
       open_p: "Весь профиль и что чинить первым под вашу цель откроются здесь же, на этой странице. Оставьте имя и контакт — посмотрю ваш результат и предложу разобрать его голосом за 20 минут. Бесплатно и ни к чему не обязывает.",
@@ -184,12 +193,12 @@
     },
     en: {
       title: "English Level Test — Ksenia Berman",
-      desc: "Free English level test: in 10–15 minutes see not just your level, but the specific weak spots that keep you from speaking.",
+      desc: "Free English level test: in 15–20 minutes see not just your level, but the specific weak spots that keep you from speaking.",
       name: "Ksenia Berman",
-      intro_pill: "10–15 minutes · nothing to fill in to start",
+      intro_pill: "15–20 minutes · nothing to fill in to start",
       h1: "English level test",
       lede: "At the end you’ll see not a dry “level B1”, but what exactly keeps you from speaking freely — and where best to start.",
-      intro_small: "Questions adapt to your answers. There’s a short listening part — you can skip it if you can’t listen right now.",
+      intro_small: "Questions adapt to your answers. There’s a short listening part and a few questions to answer out loud. You can skip them if now isn’t convenient.",
       start: "Start",
       back: "← Back",
       ctx_pill: "A bit about you",
@@ -197,13 +206,18 @@
       listen: "Listen to the recording",
       hint_show: "", hint_hide: "",
       skip: "Can’t listen right now — skip",
+      sp_pill: "Speaking",
+      sp_intro: "Answer out loud, as in a conversation: 2–4 sentences, up to 1.5 minutes. Your browser will ask for microphone access. Only I will hear the recording. If now isn’t convenient, skip it.",
+      sp_record: "● Record answer", sp_stop: "■ Stop", sp_recording: "Recording", sp_again: "Record again", sp_next: "Next", sp_skip: "Skip question",
+      sp_nomic: "The microphone isn’t available. Allow microphone access in your browser or skip the question.",
+      sending_audio: "Sending recordings…",
       cando_pill: "In practice",
       scale: ["Not at all", "Not really", "Mostly yes", "Definitely yes"],
       st: {strong: "strong", medium: "medium", weak: "weak", unchecked: "not checked"},
       done: "Test completed.",
       delta: "Interesting: you thought something else was hardest — but the test shows “{x}” is your weakest area. A gap like this between self-assessment and reality is a common reason people get stuck.",
       ready: "Your result is ready",
-      profile: "Your profile in 5 areas",
+      profile: "Your profile in 6 areas",
       lock: "Full breakdown — on the next step",
       open_h: "Unlock the full breakdown",
       open_p: "The full profile and what to fix first for your goal will open right here, on this page. Leave your name and contact — I’ll look at your result and offer to go through it by voice in 20 minutes. Free, no obligation.",
@@ -223,12 +237,12 @@
     },
     he: {
       title: "מבחן רמה באנגלית — קסניה ברמן",
-      desc: "מבחן רמה חינמי באנגלית: תוך 10–15 דקות תראו לא רק את הרמה, אלא גם את הנקודות החלשות שמפריעות לכם לדבר.",
+      desc: "מבחן רמה חינמי באנגלית: תוך 15–20 דקות תראו לא רק את הרמה, אלא גם את הנקודות החלשות שמפריעות לכם לדבר.",
       name: "קסניה ברמן",
-      intro_pill: "<bdi dir=ltr>10–15</bdi> דקות · לא צריך למלא כלום כדי להתחיל",
+      intro_pill: "<bdi dir=ltr>15–20</bdi> דקות · לא צריך למלא כלום כדי להתחיל",
       h1: "מבחן רמה באנגלית",
       lede: "בסוף תראו לא סתם «רמה B1», אלא מה בדיוק מפריע לכם לדבר בחופשיות — ומאיפה כדאי להתחיל.",
-      intro_small: "השאלות מותאמות לתשובות שלכם. השאלות עצמן באנגלית, ולשאלות הפשוטות יש תרגום לעברית. יש חלק קצר של האזנה — אפשר לדלג עליו אם לא נוח להקשיב עכשיו.",
+      intro_small: "השאלות מותאמות לתשובות שלכם. השאלות עצמן באנגלית, ולשאלות הפשוטות יש תרגום לעברית. יש חלק קצר של האזנה וכמה שאלות שעונים עליהן בקול. אפשר לדלג עליהם אם לא נוח עכשיו.",
       start: "להתחיל",
       back: "→ חזרה",
       ctx_pill: "קצת עליכם",
@@ -236,13 +250,18 @@
       listen: "האזינו להקלטה",
       hint_show: "תרגום השאלה", hint_hide: "להסתיר תרגום",
       skip: "לא יכול/ה להקשיב עכשיו — לדלג",
+      sp_pill: "חלק בעל פה",
+      sp_intro: "ענו בקול, כמו בשיחה: <bdi dir=ltr>2–4</bdi> משפטים, עד דקה וחצי. הדפדפן יבקש גישה למיקרופון. רק אני אשמע את ההקלטה. אם לא נוח עכשיו — אפשר לדלג.",
+      sp_record: "● להקליט תשובה", sp_stop: "■ לעצור", sp_recording: "מקליט", sp_again: "להקליט שוב", sp_next: "הלאה", sp_skip: "לדלג על השאלה",
+      sp_nomic: "המיקרופון לא זמין. אפשרו גישה למיקרופון בדפדפן או דלגו על השאלה.",
+      sending_audio: "שולח הקלטות…",
       cando_pill: "בפועל",
       scale: ["בכלל לא", "לא ממש", "די כן", "בהחלט כן"],
       st: {strong: "חזק", medium: "בינוני", weak: "חלש", unchecked: "לא נבדק"},
       done: "המבחן הושלם.",
       delta: "מעניין: חשבתם שמשהו אחר הכי קשה — אבל לפי המבחן התחום החלש ביותר הוא «{x}». פער כזה בין ההערכה העצמית למציאות הוא סיבה נפוצה לתקיעות.",
       ready: "התוצאה שלכם מוכנה",
-      profile: "פרופיל ב־5 תחומים",
+      profile: "פרופיל ב־6 תחומים",
       lock: "הניתוח המלא — בשלב הבא",
       open_h: "לפתוח את הניתוח המלא",
       open_p: "הפרופיל המלא ומה לתקן קודם לפי המטרה שלכם ייפתחו כאן, בעמוד הזה. השאירו שם ופרטי קשר — אסתכל על התוצאה ואציע לעבור עליה בשיחה קולית של 20 דקות. בחינם וללא התחייבות.",
@@ -304,23 +323,28 @@
     user_agent: navigator.userAgent || ""
   };
 
+  // всего шагов для полосы прогресса: контекст, база, диагностика, устная часть, can-do
+  var TOTAL = D.context.length + D.basics.length + E.DIAGNOSTIC_COUNT + D.speaking.length + 3;
+  var QN = D.basics.length + E.DIAGNOSTIC_COUNT; // вопросов с вариантами — сквозная нумерация «Вопрос i из n»
   var ctxIndex = 0;   // индекс текущего контекстного вопроса
+  var spIndex = 0, spStart = 0; // устная часть: текущий вопрос и с какого начали
   var candoList = []; // выбранные can-do
   var candoIndex = 0;
 
   // ---- «Назад»: перед каждым ответом запоминаем состояние, кнопка его восстанавливает ----
   var steps = [];
-  var SESSION_KEYS = ["level", "goal", "situation", "self_weak", "difficulty", "asked", "answers", "block", "axisCount", "cando"];
+  var SESSION_KEYS = ["level", "goal", "situation", "self_weak", "difficulty", "asked", "basics", "answers", "block", "axisCount", "speaking", "cando"];
   function save(screen){
     var st = {};
     SESSION_KEYS.forEach(function(k){ st[k] = session[k]; });
-    steps.push({s: JSON.stringify(st), ctxIndex: ctxIndex, candoIndex: candoIndex, candoList: candoList.slice(), screen: screen});
+    steps.push({s: JSON.stringify(st), ctxIndex: ctxIndex, spIndex: spIndex, spStart: spStart, candoIndex: candoIndex, candoList: candoList.slice(), screen: screen});
   }
   function goBack(){
+    stopRec(false);
     var st = steps.pop();
     if(!st){ ctxIndex = 0; screenIntro(); return; }
     Object.assign(session, JSON.parse(st.s));
-    ctxIndex = st.ctxIndex; candoIndex = st.candoIndex; candoList = st.candoList;
+    ctxIndex = st.ctxIndex; spIndex = st.spIndex; spStart = st.spStart; candoIndex = st.candoIndex; candoList = st.candoList;
     st.screen();
   }
   function addBack(){
@@ -356,7 +380,7 @@
   function screenContext(){
     current = screenContext;
     var q = D.context[ctxIndex];
-    setProgress(ctxIndex, D.context.length + E.DIAGNOSTIC_COUNT + 3);
+    setProgress(ctxIndex, TOTAL);
     clear(); addBack();
     var card = el('<div class="card"><div class="pill">'+L.ctx_pill+' · '+(ctxIndex+1)+'/'+D.context.length+'</div>'+
       '<div class="q-prompt">'+t(q.prompt)+'</div><div class="opts"></div></div>');
@@ -368,11 +392,21 @@
         session[q.key] = o.value;
         ctxIndex++;
         if(ctxIndex < D.context.length) screenContext();
-        else startDiagnostic();
+        else nextBasic();
       };
       opts.appendChild(b);
     });
     app.appendChild(card);
+  }
+
+  // ======================= БАЗА: базовая грамматика (всем, без адаптации) =======================
+  function nextBasic(){
+    current = nextBasic;
+    var i = session.basics.length;
+    if(i >= D.basics.length){ startDiagnostic(); return; }
+    var q = D.basics[i];
+    setProgress(D.context.length + i, TOTAL);
+    questionCard(q, i + 1, function(chosen){ save(nextBasic); E.recordBasic(session, q, chosen); nextBasic(); });
   }
 
   // ======================= БЛОК B: диагностика =======================
@@ -380,43 +414,161 @@
 
   function nextDiagnostic(){
     current = nextDiagnostic;
-    if(E.isDiagnosticDone(session)){ startCando(); return; }
+    if(E.isDiagnosticDone(session)){ startSpeaking(); return; }
     var q = E.selectNext(session);
-    if(!q){ startCando(); return; }
-    var done = D.context.length + session.answers.length;
-    setProgress(done, D.context.length + E.DIAGNOSTIC_COUNT + 3);
-    clear(); addBack();
+    if(!q){ startSpeaking(); return; }
+    setProgress(D.context.length + D.basics.length + session.answers.length, TOTAL);
+    questionCard(q, D.basics.length + session.answers.length + 1, function(chosen, skipped){
+      save(nextDiagnostic); E.recordAnswer(session, q, chosen, skipped); nextDiagnostic();
+    });
+  }
 
-    var isListen = q.axis === "listening";
+  // кнопка «Не понимаю вопрос» с переводом формулировки
+  function hintHtml(q){
     var hint = q.hint && q.hint[LANG];
+    return hint ? '<button class="hint-btn" id="hint">'+L.hint_show+'</button><div class="hint" id="hinttext" hidden>'+hint+'</div>' : '';
+  }
+  function wireHint(card){
+    var hb = card.querySelector("#hint");
+    if(!hb) return;
+    hb.onclick = function(){
+      var h = card.querySelector("#hinttext");
+      h.hidden = !h.hidden;
+      hb.textContent = h.hidden ? L.hint_show : L.hint_hide;
+    };
+  }
+
+  // карточка вопроса с вариантами; onAnswer(индекс варианта | null, пропуск listening)
+  function questionCard(q, num, onAnswer){
+    clear(); addBack();
+    var isListen = q.axis === "listening";
     var card = el('<div class="card">'+
-      '<div class="pill">'+fill(fill(L.q_pill, "i", session.answers.length+1), "n", E.DIAGNOSTIC_COUNT)+'</div>'+
+      '<div class="pill">'+fill(fill(L.q_pill, "i", num), "n", QN)+'</div>'+
       (isListen ? '<div class="listen">'+L.listen+'</div><audio controls preload="none" src="'+(q.audio||'')+'"></audio>' : '')+
       '<div class="q-prompt" dir="ltr" lang="en">'+q.prompt+'</div>'+
-      (hint ? '<button class="hint-btn" id="hint">'+L.hint_show+'</button><div class="hint" id="hinttext" hidden>'+hint+'</div>' : '')+
+      hintHtml(q)+
       '<div class="opts"></div>'+
       (isListen ? '<div style="margin-top:14px"><button class="btn btn-ghost" id="skip">'+L.skip+'</button></div>' : '')+
       '</div>');
     var opts = card.querySelector(".opts");
     q.options.forEach(function(text, i){
       var b = el('<button class="opt" dir="ltr" lang="en">'+text+'</button>');
-      b.onclick = function(){ save(nextDiagnostic); E.recordAnswer(session, q, i, false); nextDiagnostic(); };
+      b.onclick = function(){ onAnswer(i, false); };
       opts.appendChild(b);
     });
-    if(isListen){
-      card.querySelector("#skip").onclick = function(){
-        save(nextDiagnostic); E.recordAnswer(session, q, null, true); nextDiagnostic();
-      };
-    }
-    if(hint){
-      var hb = card.querySelector("#hint");
-      hb.onclick = function(){
-        var h = card.querySelector("#hinttext");
-        h.hidden = !h.hidden;
-        hb.textContent = h.hidden ? L.hint_show : L.hint_hide;
-      };
-    }
+    if(isListen) card.querySelector("#skip").onclick = function(){ onAnswer(null, true); };
+    wireHint(card);
     app.appendChild(card);
+  }
+
+  // ======================= УСТНАЯ ЧАСТЬ: ответы голосом =======================
+  // Запись остаётся в браузере до отправки контактов; тогда уходит на api.bermanber.com/api/audio.
+  var audioBlobs = {}; // id вопроса -> {blob, url, ext}; в снимки «Назад» не попадают
+  var rec = null;      // идущая запись
+  var REC_MAX = 90;    // секунд на ответ, потом запись останавливается сама
+  function mmss(sec){ return Math.floor(sec/60) + ":" + ("0" + sec%60).slice(-2); }
+
+  function startSpeaking(){ spIndex = spStart = E.speakingStart(session); nextSpeaking(); }
+
+  function nextSpeaking(){
+    current = nextSpeaking;
+    stopRec(false);
+    if(spIndex >= D.speaking.length){ startCando(); return; }
+    var q = D.speaking[spIndex];
+    setProgress(D.context.length + QN + spIndex, TOTAL);
+    clear(); addBack();
+    var card = el('<div class="card">'+
+      '<div class="pill">'+L.sp_pill+' · '+(spIndex-spStart+1)+'/'+(D.speaking.length-spStart)+'</div>'+
+      '<p class="small">'+L.sp_intro+'</p>'+
+      '<div class="q-prompt" dir="ltr" lang="en">'+q.prompt+'</div>'+
+      hintHtml(q)+
+      '<div id="rec"></div>'+
+      '<div style="margin-top:14px"><button class="btn btn-ghost" id="sp-skip">'+L.sp_skip+'</button></div>'+
+      '</div>');
+    wireHint(card);
+    card.querySelector("#sp-skip").onclick = function(){ answerSpeaking(q, "skipped"); };
+    app.appendChild(card);
+    renderRec(card.querySelector("#rec"), q);
+  }
+
+  function answerSpeaking(q, status){
+    save(nextSpeaking);
+    stopRec(false);
+    session.speaking.push({id: q.id, prompt: q.prompt, status: status});
+    spIndex++; nextSpeaking();
+  }
+
+  // три состояния: нет записи → идёт запись → есть запись (прослушать, перезаписать, дальше)
+  function renderRec(box, q, msg){
+    var a = audioBlobs[q.id];
+    box.innerHTML = rec
+      ? '<p class="rec-on"><i></i>'+L.sp_recording+' <b id="rec-t">0:00</b> / '+mmss(REC_MAX)+'</p><button class="btn" id="rec-stop">'+L.sp_stop+'</button>'
+      : a
+      ? '<audio controls src="'+a.url+'"></audio><div class="row"><button class="btn" id="rec-next">'+L.sp_next+'</button><button class="btn btn-ghost" id="rec-start">'+L.sp_again+'</button></div>'
+      : (msg ? '<p class="err">'+msg+'</p>' : '')+'<button class="btn" id="rec-start">'+L.sp_record+'</button>';
+    var start = box.querySelector("#rec-start"), stop = box.querySelector("#rec-stop"), next = box.querySelector("#rec-next");
+    if(start) start.onclick = function(){ start.disabled = true; startRec(box, q); };
+    if(stop) stop.onclick = function(){ stopRec(true); };
+    if(next) next.onclick = function(){ answerSpeaking(q, "recorded"); };
+  }
+
+  function startRec(box, q){
+    if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia || !window.MediaRecorder){ renderRec(box, q, L.sp_nomic); return; }
+    navigator.mediaDevices.getUserMedia({audio: true}).then(function(stream){
+      if(!box.isConnected){ stream.getTracks().forEach(function(t){ t.stop(); }); return; } // ушли с экрана, пока браузер спрашивал
+      // Chrome/Firefox пишут webm (opus), Safari — mp4 (aac). 32 кбит/с: 1,5 минуты ≈ 360 КБ
+      var type = ["audio/webm;codecs=opus", "audio/mp4", "audio/ogg;codecs=opus"].filter(function(t){ return MediaRecorder.isTypeSupported(t); })[0];
+      var opts = {audioBitsPerSecond: 32000};
+      if(type) opts.mimeType = type;
+      var mr = new MediaRecorder(stream, opts), chunks = [], t0 = Date.now();
+      var r = rec = {mr: mr, stream: stream, keep: false};
+      mr.ondataavailable = function(e){ if(e.data && e.data.size) chunks.push(e.data); };
+      mr.onstop = function(){
+        if(!r.keep) return;
+        if(chunks.length){
+          var mime = mr.mimeType || type || "audio/webm";
+          if(audioBlobs[q.id]) URL.revokeObjectURL(audioBlobs[q.id].url);
+          var blob = new Blob(chunks, {type: mime});
+          audioBlobs[q.id] = {blob: blob, url: URL.createObjectURL(blob), ext: /mp4|aac/.test(mime) ? "mp4" : /ogg/.test(mime) ? "ogg" : "webm"};
+        }
+        if(box.isConnected) renderRec(box, q);
+      };
+      r.timer = setInterval(function(){
+        var sec = Math.round((Date.now() - t0) / 1000);
+        var te = document.getElementById("rec-t");
+        if(te) te.textContent = mmss(Math.min(sec, REC_MAX));
+        if(sec >= REC_MAX) stopRec(true);
+      }, 500);
+      mr.start();
+      renderRec(box, q);
+    }).catch(function(){ if(box.isConnected) renderRec(box, q, L.sp_nomic); });
+  }
+
+  // keep=false — запись выбрасываем (ушли с экрана, сменили язык, пропустили)
+  function stopRec(keep){
+    if(!rec) return;
+    var r = rec; rec = null;
+    r.keep = keep;
+    clearInterval(r.timer);
+    if(r.mr.state !== "inactive") r.mr.stop();
+    r.stream.getTracks().forEach(function(t){ t.stop(); });
+  }
+
+  // отправить записи; у каждой — id в хранилище (key) или пустая строка, если не дошла
+  function uploadAudio(){
+    return Promise.all(session.speaking.map(function(sp){
+      var a = audioBlobs[sp.id];
+      if(sp.status !== "recorded" || !a) return null;
+      var ctl = window.AbortController ? new AbortController() : null;
+      var tm = ctl && setTimeout(function(){ ctl.abort(); }, 45000);
+      // text/plain — простой запрос без CORS preflight; настоящий тип записи — в ?t=
+      return fetch("https://api.bermanber.com/api/audio?t=" + a.ext,
+          {method: "POST", headers: {"Content-Type": "text/plain"}, body: a.blob, signal: ctl ? ctl.signal : undefined})
+        .then(function(res){ return res.json(); })
+        .then(function(j){ sp.key = j && j.ok ? j.id : ""; })
+        .catch(function(e){ console.error("audio upload:", e); sp.key = ""; })
+        .then(function(){ clearTimeout(tm); });
+    }));
   }
 
   // ======================= БЛОК C: can-do =======================
@@ -430,8 +582,7 @@
     current = nextCando;
     if(candoIndex >= candoList.length){ finish(); return; }
     var c = candoList[candoIndex];
-    var done = D.context.length + E.DIAGNOSTIC_COUNT + candoIndex;
-    setProgress(done, D.context.length + E.DIAGNOSTIC_COUNT + 3);
+    setProgress(TOTAL - 3 + candoIndex, TOTAL);
     clear(); addBack();
     var card = el('<div class="card">'+
       '<div class="pill">'+L.cando_pill+' · '+(candoIndex+1)+'/'+candoList.length+'</div>'+
@@ -544,11 +695,14 @@
 
   function submitContact(contact){
     var btn = document.getElementById("g-submit");
-    btn.disabled = true; btn.textContent = L.sending;
+    btn.disabled = true;
+    btn.textContent = session.speaking.some(function(sp){ return sp.status === "recorded"; }) ? L.sending_audio : L.sending;
     var full = Object.assign({}, contact, meta);
-    var payload = E.buildPayload(session, results, full);
-    payload.answers_detail = E.buildDetail(session, D); // для листа Answers
-    sendToSheets(payload).then(function(){
+    uploadAudio().then(function(){
+      var payload = E.buildPayload(session, results, full);
+      payload.answers_detail = E.buildDetail(session, D); // для листа Answers; у устных ответов — audio (id записи)
+      return sendToSheets(payload);
+    }).then(function(){
       screenFull();
     }).catch(function(e){
       // даже если запись не удалась — результат пользователю показываем

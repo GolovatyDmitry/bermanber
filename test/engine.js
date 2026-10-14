@@ -9,7 +9,7 @@
   var DIFF = ["starter", "easy", "core", "hard"];
   var WEIGHT = { starter: 1, easy: 2, core: 3, hard: 4 };
   var LEVEL_IDX = { starter: 0, easy: 1, core: 2, hard: 3 };
-  var AXES = ["grammar", "register", "calque", "listening", "vocab"];
+  var AXES = ["basics", "grammar", "register", "calque", "listening", "vocab"];
   var DIAGNOSTIC_COUNT = 12; // сколько диагностических айтемов показываем
   var BLOCK = 2;             // сложность пересматривается после каждых BLOCK ответов
   var BAND = ["A2", "B1", "B2", "C1"]; // уровень по ступени: starter..hard
@@ -28,7 +28,9 @@
       level: null, goal: null, situation: null, self_weak: null,
       difficulty: "core",     // текущий пул; уточняется setStartDifficulty
       asked: [],              // id уже показанных диагностических
+      basics: [],             // ответы блока базовой грамматики (в том же виде, что answers); на band не влияют
       answers: [],            // {id, axis, level, correct(bool|null), skipped, chosen}
+      speaking: [],           // {id, prompt, status: recorded|skipped, key, failed} — голосовые ответы
       block: [],              // результаты текущего блока (BLOCK ответов) для маршрутизации
       axisCount: {},          // axis -> сколько раз спросили (для баланса осей)
       cando: []               // {id, text, score, scoreLabel}
@@ -118,6 +120,16 @@
     else if (ratio <= 0.34) session.difficulty = down(session.difficulty);
   }
 
+  // ответ в блоке базовой грамматики: без адаптации сложности и без счёта в 12 диагностических
+  function recordBasic(session, q, chosen) {
+    session.basics.push({ id: q.id, axis: q.axis, level: q.level, correct: chosen === q.answer, skipped: false, chosen: chosen });
+  }
+
+  // с какого вопроса устной части начать: уровень по тесту B1 и выше — со второго
+  function speakingStart(session) {
+    return ["B1", "B2", "C1"].indexOf(computeBand(session)) !== -1 ? 1 : 0;
+  }
+
   function isDiagnosticDone(session) {
     return session.answers.length >= DIAGNOSTIC_COUNT;
   }
@@ -142,7 +154,9 @@
     return best < 0 ? "A1" : BAND[best];
   }
 
-  function axisStatus(pct) {
+  function axisStatus(pct, axis) {
+    // база должна быть без ошибок: одна ошибка из 7 — уже «средне»
+    if (axis === "basics") return pct === 1 ? "strong" : pct >= 0.7 ? "medium" : "weak";
     if (pct >= 0.75) return "strong";
     if (pct >= 0.5) return "medium";
     return "weak";
@@ -155,7 +169,7 @@
     AXES.forEach(function (a) { per[a] = { correctW: 0, totalW: 0, attempted: 0 }; });
 
     var sumCorrect = 0, sumTotal = 0;
-    session.answers.forEach(function (ans) {
+    session.basics.concat(session.answers).forEach(function (ans) {
       if (ans.skipped) return;
       var w = WEIGHT[ans.level];
       per[ans.axis].totalW += w;
@@ -175,7 +189,7 @@
         axis: a,
         attempted: d.attempted,
         pct: pct,
-        status: d.attempted ? axisStatus(pct) : "unchecked"
+        status: d.attempted ? axisStatus(pct, a) : "unchecked"
       };
     });
 
@@ -230,13 +244,14 @@
       overall_pct: Math.round(results.overallRatio * 100),
       weakest_axis: results.weakest ? results.weakest.axis : "",
       priorities: results.priorities.join("|"),
+      basics_pct: axisPct.basics,
       grammar_pct: axisPct.grammar,
       register_pct: axisPct.register,
       calque_pct: axisPct.calque,
       listening_pct: axisPct.listening,
       vocab_pct: axisPct.vocab,
       cando: session.cando.map(function (c) { return c.id + ":" + c.score; }).join("|"),
-      answers: session.answers.map(function (a) {
+      answers: session.basics.concat(session.answers).map(function (a) {
         return a.id + ":" + (a.skipped ? "skip" : (a.correct ? "1" : "0"));
       }).join("|"),
       utm_source: contact.utm_source || "",
@@ -244,27 +259,43 @@
       utm_campaign: contact.utm_campaign || "",
       referrer: contact.referrer || "",
       user_agent: contact.user_agent || "",
-      test_lang: session.lang || ""
+      test_lang: session.lang || "",
+      speaking: session.speaking.map(function (sp) {
+        return sp.id + ":" + (sp.status === "skipped" ? "skip" : sp.key ? "audio" : "fail");
+      }).join("|")
     };
   }
 
   // расшифровка ответов для человекочитаемого листа «Answers»
   function buildDetail(session, data) {
     var byId = {};
-    data.diagnostic.forEach(function (q) { byId[q.id] = q; });
+    data.basics.concat(data.diagnostic).forEach(function (q) { byId[q.id] = q; });
     var rows = [];
-    session.answers.forEach(function (a) {
+    session.basics.concat(session.answers).forEach(function (a) {
       var q = byId[a.id];
       if (!q) return;
       var axisLabel = (data.axisMeta[a.axis] && ruText(data.axisMeta[a.axis].label)) || a.axis;
       rows.push({
-        type: "тест",
+        type: a.axis === "basics" ? "база" : "тест",
         axis: axisLabel,
         level: a.level,
         question: q.prompt,
         answer: a.skipped ? "— пропущено —" : q.options[a.chosen],
         correct: q.options[q.answer],
         result: a.skipped ? "пропущено" : (a.correct ? "верно" : "неверно")
+      });
+    });
+    // устная часть: key — id записи в KV, кабинет показывает плеер
+    (session.speaking || []).forEach(function (sp) {
+      rows.push({
+        type: "устно",
+        axis: "",
+        level: "",
+        question: sp.prompt,
+        answer: sp.status === "skipped" ? "— пропущено —" : sp.key ? "запись" : "запись не дошла",
+        correct: "",
+        result: "",
+        audio: sp.key || ""
       });
     });
     (session.cando || []).forEach(function (c) {
@@ -287,6 +318,8 @@
     setStartDifficulty: setStartDifficulty,
     selectNext: selectNext,
     recordAnswer: recordAnswer,
+    recordBasic: recordBasic,
+    speakingStart: speakingStart,
     routeDifficulty: routeDifficulty,
     isDiagnosticDone: isDiagnosticDone,
     pickCando: pickCando,

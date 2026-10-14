@@ -1,7 +1,8 @@
 /* ============================================================================
    Банк вопросов теста уровня. Контент правится ЗДЕСЬ, отдельно от движка.
    ----------------------------------------------------------------------------
-   Оси (axis): grammar | register | calque | listening | vocab
+   Оси (axis): basics | grammar | register | calque | listening | vocab
+   (basics — блок базовой грамматики, его видят все; speaking — голосом, без оценки)
    Сложность (level): starter (A1–A2) | easy (A2–B1) | core (B1–B2) | hard (B2–C1)
    answer — индекс правильного варианта в options (с нуля).
    goals — для каких целей вопрос подходит. НЕТ поля goals = подходит всем.
@@ -106,6 +107,47 @@ window.QUIZ_DATA = {
                                      he: "כתיבה: מיילים, הודעות, חיבורים" } }
       ]
     }
+  ],
+
+  /* --- БАЗА: базовая грамматика. Всем, при любой самооценке, до адаптивной части.
+     Отдельная ось basics, на уровень (band) и сложность не влияет.
+     topic: irregular | third_s | questions. ---------------------------------- */
+  basics: [
+    { id: "bs_irr1", axis: "basics", level: "starter", topic: "irregular",
+      prompt: "Choose the correct option: “Yesterday I ___ to the cinema with my friends.”",
+      hint: { ru: "Выберите вариант: «Вчера я ___ в кино с друзьями».",
+              he: "בחרו אפשרות: «אתמול ___ לקולנוע עם חברים»." },
+      options: ["go", "goed", "went", "gone"], answer: 2 },
+    { id: "bs_irr2", axis: "basics", level: "starter", topic: "irregular",
+      prompt: "Choose the correct option: “Last week she ___ a new phone.”",
+      hint: { ru: "Выберите вариант: «На прошлой неделе она ___ новый телефон».",
+              he: "בחרו אפשרות: «בשבוע שעבר היא ___ טלפון חדש»." },
+      options: ["buyed", "bought", "brought", "buys"], answer: 1 },
+    { id: "bs_s1", axis: "basics", level: "starter", topic: "third_s",
+      prompt: "Choose the correct option: “My brother ___ in a bank.”",
+      hint: { ru: "Выберите вариант: «Мой брат ___ в банке».",
+              he: "בחרו אפשרות: «אח שלי ___ בבנק»." },
+      options: ["work", "works", "working", "is work"], answer: 1 },
+    { id: "bs_q1", axis: "basics", level: "starter", topic: "questions",
+      prompt: "Choose the correct question:",
+      hint: { ru: "Выберите правильный вопрос: «Где ты живёшь?»",
+              he: "בחרו את השאלה הנכונה: «איפה את/ה גר/ה?»" },
+      options: ["Where you live?", "Where do you live?", "Where you do live?", "Where does you live?"], answer: 1 },
+    { id: "bs_q2", axis: "basics", level: "starter", topic: "questions",
+      prompt: "Choose the correct question:",
+      hint: { ru: "Выберите правильный вопрос: «Что ты сейчас делаешь?»",
+              he: "בחרו את השאלה הנכונה: «מה את/ה עושה עכשיו?»" },
+      options: ["What you are doing now?", "What do you doing now?", "What are you doing now?", "What are doing you now?"], answer: 2 },
+    { id: "bs_q3", axis: "basics", level: "starter", topic: "questions",
+      prompt: "Choose the correct question:",
+      hint: { ru: "Выберите правильный вопрос: «Куда ты ездил(а) прошлым летом?»",
+              he: "בחרו את השאלה הנכונה: «לאן נסעת בקיץ שעבר?»" },
+      options: ["Where did you go last summer?", "Where you went last summer?", "Where did you went last summer?", "Where went you last summer?"], answer: 0 },
+    { id: "bs_q4", axis: "basics", level: "starter", topic: "questions",
+      prompt: "Choose the correct question:",
+      hint: { ru: "Выберите правильный вопрос: «Что ты собираешься делать завтра?»",
+              he: "בחרו את השאלה הנכונה: «מה את/ה מתכוון/ת לעשות מחר?»" },
+      options: ["What you are going to do tomorrow?", "What are you going to do tomorrow?", "What do you going to do tomorrow?", "What are you go to do tomorrow?"], answer: 1 }
   ],
 
   /* --- БЛОК B: диагностика. Движок выбирает 12 с адаптацией под цель. ------ */
@@ -406,6 +448,24 @@ window.QUIZ_DATA = {
       transcript: "Honestly, the work itself is great. The one thing I’d change — right now we get an update once a month, and that’s just too slow. Could we make it weekly?" }
   ],
 
+  /* --- УСТНАЯ ЧАСТЬ: голосовые ответы, по одному вопросу на экран, по порядку.
+     Не оценивается автоматически — записи слушает преподаватель в кабинете.
+     С уровнем по тесту B1 и выше первый вопрос пропускаем (engine.speakingStart). */
+  speaking: [
+    { id: "sp1", prompt: "What’s your name? How old are you? Where are you from?",
+      hint: { ru: "Как вас зовут? Сколько вам лет? Откуда вы?",
+              he: "איך קוראים לך? בן/בת כמה את/ה? מאיפה את/ה?" } },
+    { id: "sp2", prompt: "What’s your job? What do you do?",
+      hint: { ru: "Кем вы работаете? Чем занимаетесь?",
+              he: "במה את/ה עובד/ת? במה את/ה עוסק/ת?" } },
+    { id: "sp3", prompt: "Where do you live? Do you like this place? Why / why not?",
+      hint: { ru: "Где вы живёте? Нравится ли вам это место? Почему да или почему нет?",
+              he: "איפה את/ה גר/ה? המקום מוצא חן בעיניך? למה כן או למה לא?" } },
+    { id: "sp4", prompt: "If you could change one thing in your life right now, what would that be?",
+      hint: { ru: "Если бы вы могли изменить в своей жизни одну вещь прямо сейчас, что бы это было?",
+              he: "אם היית יכול/ה לשנות דבר אחד בחיים שלך עכשיו, מה זה היה?" } }
+  ],
+
   /* --- БЛОК C: can-do самооценка. Движок берёт 3 под цель. ----------------
      Шкала: 0 = «совсем нет» … 3 = «уверенно да». */
   cando: [
@@ -449,6 +509,21 @@ window.QUIZ_DATA = {
 
   /* --- Тексты вердиктов и рекомендаций по осям (правятся здесь). ---------- */
   axisMeta: {
+    basics: {
+      label: { ru: "Базовая грамматика", en: "Grammar basics", he: "דקדוק בסיסי" },
+      weak: { ru: "В базе есть пробелы: неправильные глаголы, -s в Present Simple, порядок слов в вопросах. Такие ошибки слышны сразу — даже при хорошем словаре.",
+              en: "There are gaps in the basics: irregular verbs, -s in Present Simple, word order in questions. These mistakes are noticed at once — even with good vocabulary.",
+              he: "יש פערים בבסיס: פעלים לא סדירים, ‎-s‏ ב־Present Simple, סדר מילים בשאלות. טעויות כאלה נשמעות מיד — גם עם אוצר מילים טוב." },
+      medium: { ru: "База почти на месте, но отдельные ошибки проскакивают — в живой речи их слышно.",
+                en: "The basics are almost there, but a few mistakes slip through — and they’re audible in real speech.",
+                he: "הבסיס כמעט במקום, אבל כמה טעויות עדיין חומקות — ובדיבור חי שומעים אותן." },
+      strong: { ru: "База крепкая: неправильные глаголы, -s и вопросы — без ошибок.",
+                en: "The basics are solid: irregular verbs, -s and questions — no mistakes.",
+                he: "הבסיס חזק: פעלים לא סדירים, ‎-s‏ ושאלות — בלי טעויות." },
+      fix: { ru: "Довести до автоматизма неправильные глаголы, -s в Present Simple и порядок слов в вопросах. Это исправляется регулярными занятиями.",
+             en: "Make irregular verbs, -s in Present Simple and question word order automatic. Regular lessons fix this.",
+             he: "להפוך לאוטומטיים פעלים לא סדירים, ‎-s‏ ב־Present Simple וסדר מילים בשאלות. זה מתוקן בשיעורים קבועים." }
+    },
     grammar: {
       label: { ru: "Грамматика", en: "Grammar", he: "דקדוק" },
       weak: { ru: "Грамматика пока подводит: времена и условные собираются наугад — и именно это тормозит речь.",
@@ -460,9 +535,9 @@ window.QUIZ_DATA = {
       strong: { ru: "Грамматика крепкая — база не мешает вам говорить.",
                 en: "Your grammar is solid — the basics don’t get in your way.",
                 he: "הדקדוק חזק — הבסיס לא מפריע לכם לדבר." },
-      fix: { ru: "Точечно закрыть времена и условные. Это 3–4 занятия, а не курс с нуля.",
-             en: "Close the gaps in tenses and conditionals. That’s 3–4 lessons, not a course from scratch.",
-             he: "לסגור נקודתית את הזמנים ומשפטי התנאי. זה 3–4 שיעורים, לא קורס מאפס." }
+      fix: { ru: "Точечно закрыть времена и условные. Это исправляется регулярными занятиями.",
+             en: "Close the gaps in tenses and conditionals. Regular lessons fix this.",
+             he: "לסגור נקודתית את הזמנים ומשפטי התנאי. זה מתוקן בשיעורים קבועים." }
     },
     register: {
       label: { ru: "Вежливость и тон", en: "Politeness and tone", he: "נימוס וטון" },
@@ -490,9 +565,9 @@ window.QUIZ_DATA = {
       strong: { ru: "Речь звучит по-английски, без русских конструкций.",
                 en: "You sound English, without structures borrowed from your native language.",
                 he: "הדיבור נשמע אנגלי, בלי מבנים מעברית." },
-      fix: { ru: "Разобрать ваш личный список калек и заменить на то, как говорят на самом деле. Сразу поднимает восприятие уровня.",
-             en: "Go through your personal list of direct translations and replace them with what people actually say. It instantly raises how your level is perceived.",
-             he: "לעבור על הרשימה האישית שלכם של תרגומים מילוליים ולהחליף אותם במה שבאמת אומרים. זה מיד משפר את הרושם מהרמה שלכם." }
+      fix: { ru: "Проработать естественность речи — говорить без заимствования конструкций из русского. Сразу поднимает восприятие уровня.",
+             en: "Work on natural phrasing — speak without structures borrowed from your native language. It instantly raises how your level is perceived.",
+             he: "לעבוד על טבעיות הדיבור — לדבר בלי מבנים שאולים מעברית. זה מיד משפר את הרושם מהרמה שלכם." }
     },
     listening: {
       label: { ru: "Понимание на слух", en: "Listening", he: "הבנת הנשמע" },
