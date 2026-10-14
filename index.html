@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Преподаватель английского онлайн — Ксения Берман, CELTA</title>
-<meta name="description" content="Уроки английского онлайн, в Эйлате — и очно. Преподаватель с сертификатами Cambridge CELTA (Pass A) и DELTA Module 1, английский на уровне C2, 5+ лет опыта. Бесплатный пробный урок и тест уровня.">
+<meta name="description" content="Уроки английского онлайн, в Эйлате — и очно. Преподаватель с сертификатами Cambridge CELTA (Pass A) и DELTA Module 1, английский на уровне C2, 5+ лет опыта. Бесплатный пробный урок, тест уровня и асинхронное обучение.">
 <meta name="theme-color" content="#1d4b57">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -153,7 +153,13 @@ nav a:hover{color:var(--ink)}
 .cur{display:flex;background:var(--card);border-radius:999px;padding:4px;box-shadow:var(--shadow)}
 .cur button{border:0;background:none;font:600 15px Rubik,sans-serif;padding:8px 16px;border-radius:999px;cursor:pointer;color:var(--muted)}
 .cur button[aria-pressed=true]{background:var(--brand);color:#fff}
-.prices{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px}
+.pr-sub{font-size:22px;margin:40px 0 0}
+.prices{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
+.async{display:grid;grid-template-columns:2.4fr 1fr;gap:16px;margin-top:16px}
+.pc .as-lead{font-size:16px;color:var(--ink);margin-bottom:20px}
+.as-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.as-cols h4{margin:0 0 8px;font-size:15px;color:var(--brand)}
+.as-cols ol,.as-cols ul{margin:0;padding-inline-start:20px;font-size:15px;color:var(--muted);display:grid;gap:6px}
 .pc{background:var(--card);border-radius:var(--r);padding:24px;box-shadow:var(--shadow);display:flex;flex-direction:column}
 .pc h3{margin-bottom:6px}
 .pc p{font-size:15px;color:var(--muted);margin:0 0 16px}
@@ -214,7 +220,7 @@ dialog button{position:fixed;top:14px;inset-inline-end:14px;width:44px;height:44
   .lang{margin-inline-start:auto}
   section{padding:56px 0}
   .hero{padding:32px 0 56px}
-  .hero .wrap,.about-grid,.test-box,.prices,.packs{grid-template-columns:1fr}
+  .hero .wrap,.about-grid,.test-box,.prices,.packs,.async,.as-cols{grid-template-columns:1fr}
   .photo{order:-1;width:min(300px,80%)}
 }
 @media (max-width:520px){
@@ -332,13 +338,14 @@ dialog button{position:fixed;top:14px;inset-inline-end:14px;width:44px;height:44
       <div class="price-head">
         <div>
           <span class="eyebrow" data-i18n="pr_eyebrow">Занятия и цены</span>
-          <h2 data-i18n="pr_h2">Форматы и стоимость уроков</h2>
+          <h2 data-i18n="pr_h2">Форматы и стоимость</h2>
         </div>
         <div class="cur" role="group" aria-label="Currency">
           <button data-cur="ils" aria-pressed="true">₪ ILS</button>
           <button data-cur="rub" aria-pressed="false">₽ RUB</button>
         </div>
       </div>
+      <h3 class="pr-sub" data-i18n="pr_lessons">Индивидуальные и групповые уроки</h3>
       <div class="prices">
         <div class="pc"><h3 data-i18n="p_trial">Пробный урок</h3><p data-i18n="p_trial_d">Знакомимся, обсуждаем вашу цель и выбираем формат.</p><div class="val" data-ils="0" data-rub="0">0 ₪</div></div>
         <div class="pc"><h3 data-i18n="p_group">Занятие в группе</h3><p data-i18n="p_group_d">Разговорная практика с другими учениками.</p><div class="val" data-ils="80" data-rub="2000">80 ₪</div></div>
@@ -347,6 +354,30 @@ dialog button{position:fixed;top:14px;inset-inline-end:14px;width:44px;height:44
       <div class="packs">
         <div class="pc"><h3 data-i18n="p_4">Абонемент: 4 индивидуальных урока</h3><div class="sub" data-n="4"></div><div class="val" data-ils="480" data-rub="11400">480 ₪</div></div>
         <div class="pc hl"><span class="tag" data-i18n="best">Выгоднее всего</span><h3 data-i18n="p_8">Абонемент: 8 индивидуальных уроков</h3><div class="sub" data-n="8"></div><div class="val" data-ils="880" data-rub="21600">880 ₪</div></div>
+      </div>
+      <h3 class="pr-sub" id="async" data-i18n="as_h">Асинхронное обучение</h3>
+      <div class="async">
+        <div class="pc">
+          <p class="as-lead" data-i18n="as_lead">Английский без расписания и созвонов. Вы занимаетесь самостоятельно, когда удобно, по материалам, которые я готовлю, а раз в неделю получаете от меня проверку и подробную обратную связь.</p>
+          <div class="as-cols">
+            <div><h4 data-i18n="as_how_h">Как это устроено</h4><ol>
+              <li data-i18n="as_how1">Я присылаю набор материалов на неделю</li>
+              <li data-i18n="as_how2">Вы выполняете задания, когда вам удобно</li>
+              <li data-i18n="as_how3">Присылаете мне выполненные задания</li>
+              <li data-i18n="as_how4">Я проверяю и даю подробный фидбэк</li></ol></div>
+            <div><h4 data-i18n="as_in_h">Что внутри набора</h4><ul>
+              <li data-i18n="as_in1">Объяснения и примеры</li>
+              <li data-i18n="as_in2">Упражнения на закрепление</li>
+              <li data-i18n="as_in3">Статьи, видео и подкасты на английском, если уровень позволяет</li>
+              <li data-i18n="as_in4">Задания на письмо и говорение</li></ul></div>
+            <div><h4 data-i18n="as_for_h">Кому подходит</h4><ul>
+              <li data-i18n="as_for1">Плавающий график, смены, командировки</li>
+              <li data-i18n="as_for2">Не хочется платить за отменённые уроки</li>
+              <li data-i18n="as_for3">Нравится заниматься самому, но нужен кто-то, кто проверит и поправит</li>
+              <li data-i18n="as_for4">Уровень <bdi dir=ltr>A2–B2</bdi></li></ul></div>
+          </div>
+        </div>
+        <div class="pc hl"><h3 data-i18n="as_price_h">Месяц асинхронного обучения</h3><p data-i18n="as_price_p">4 блока заданий — по одному в неделю — и проверка каждого с обратной связью.</p><div class="val" data-ils="300" data-rub="7000">300 ₪</div><div class="sub" data-i18n="as_month">в месяц</div></div>
       </div>
     </div>
   </section>
@@ -411,7 +442,7 @@ dialog button{position:fixed;top:14px;inset-inline-end:14px;width:44px;height:44
 const T = {
   en: {
     title: "English Teacher Online — Ksenia Berman, CELTA",
-    desc: "English lessons online, and in person in Eilat. Cambridge CELTA (Pass A) and DELTA Module 1 qualified teacher, C2-level English, 5+ years of experience. Free trial lesson and level test.",
+    desc: "English lessons online, and in person in Eilat. Cambridge CELTA (Pass A) and DELTA Module 1 qualified teacher, C2-level English, 5+ years of experience. Free trial lesson, level test and self-paced learning.",
     wa: "Hi! I'd like to book a free trial English lesson.",
     per: "per lesson", save: "save",
     name: "Ksenia Berman",
@@ -436,6 +467,15 @@ const T = {
     p_group: "Group class", p_group_d: "Speaking practice with other students.",
     p_ind: "One-to-one lesson", p_ind_d: "A plan built around your goal and level.",
     p_4: "Package: 4 one-to-one lessons", p_8: "Package: 8 one-to-one lessons", best: "Best value",
+    pr_lessons: "One-to-one and group lessons", as_h: "Self-paced learning",
+    as_lead: "English without a timetable or video calls. You study on your own, whenever it suits you, with materials I prepare — and once a week you get my review and detailed feedback.",
+    as_how_h: "How it works", as_how1: "I send you a set of materials for the week", as_how2: "You do the tasks whenever it suits you",
+    as_how3: "You send me your completed work", as_how4: "I check it and give detailed feedback",
+    as_in_h: "What's in a set", as_in1: "Explanations and examples", as_in2: "Practice exercises",
+    as_in3: "Articles, videos and podcasts in English, if your level allows", as_in4: "Writing and speaking tasks",
+    as_for_h: "Who it's for", as_for1: "Irregular schedule, shifts, business trips", as_for2: "You don't want to pay for cancelled lessons",
+    as_for3: "You like studying on your own but need someone to check and correct your work", as_for4: "Level <bdi dir=ltr>A2–B2</bdi>",
+    as_price_h: "One month of self-paced learning", as_price_p: "4 task sets — one a week — each checked with feedback.", as_month: "per month",
     t_eyebrow: "Free test", t_h2: "Find out your English level in 15–20 minutes",
     t_p: "At the end you'll see not just your level, but what keeps you from speaking freely — and where to start.",
     t_btn: "Start the test",
@@ -476,6 +516,15 @@ const T = {
     p_group: "שיעור בקבוצה", p_group_d: "תרגול שיחה עם תלמידים נוספים.",
     p_ind: "שיעור פרטי", p_ind_d: "תוכנית לפי המטרה והרמה שלכם.",
     p_4: "מנוי: 4 שיעורים פרטיים", p_8: "מנוי: 8 שיעורים פרטיים", best: "הכי משתלם",
+    pr_lessons: "שיעורים פרטיים ושיעורים בקבוצה", as_h: "למידה עצמאית בליווי",
+    as_lead: "אנגלית בלי מערכת שעות ובלי שיחות וידאו. לומדים לבד, מתי שנוח, עם חומרים שאני מכינה — ופעם בשבוע מקבלים ממני בדיקה ומשוב מפורט.",
+    as_how_h: "איך זה עובד", as_how1: "אני שולחת ערכת חומרים לשבוע", as_how2: "אתם עושים את המשימות מתי שנוח לכם",
+    as_how3: "שולחים לי את המשימות שעשיתם", as_how4: "אני בודקת ונותנת משוב מפורט",
+    as_in_h: "מה יש בערכה", as_in1: "הסברים ודוגמאות", as_in2: "תרגילי חיזוק",
+    as_in3: "כתבות, סרטונים ופודקאסטים באנגלית, אם הרמה מאפשרת", as_in4: "משימות כתיבה ודיבור",
+    as_for_h: "למי זה מתאים", as_for1: "לוח זמנים משתנה, משמרות, נסיעות עבודה", as_for2: "לא רוצים לשלם על שיעורים שבוטלו",
+    as_for3: "אוהבים ללמוד לבד, אבל צריך מישהו שיבדוק ויתקן", as_for4: "רמה <bdi dir=ltr>A2–B2</bdi>",
+    as_price_h: "חודש של למידה עצמאית", as_price_p: "4 ערכות משימות — אחת בשבוע — וכל אחת נבדקת עם משוב.", as_month: "לחודש",
     t_eyebrow: "מבחן חינם", t_h2: "בדקו את רמת האנגלית שלכם ב־<bdi dir=ltr>15–20</bdi> דקות",
     t_p: "בסוף תראו לא רק את הרמה, אלא גם מה מפריע לכם לדבר בחופשיות — ומאיפה כדאי להתחיל.",
     t_btn: "להתחלת המבחן",
