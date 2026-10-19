@@ -330,12 +330,14 @@
     };
   });
 
-  // ---- utm / реферер из URL ----
+  // ---- откуда пришёл: метки и реферер первого внешнего захода (запоминает /ga.js на главной или здесь) ----
+  var src = {};
+  try { src = JSON.parse(localStorage.getItem("src")) || {}; } catch (e) {}
   var meta = {
-    utm_source: params.get("utm_source") || "",
-    utm_medium: params.get("utm_medium") || "",
-    utm_campaign: params.get("utm_campaign") || "",
-    referrer: document.referrer || "",
+    utm_source: src.utm_source || "",
+    utm_medium: src.utm_medium || "",
+    utm_campaign: src.utm_campaign || "",
+    referrer: src.referrer || "",
     user_agent: navigator.userAgent || ""
   };
 

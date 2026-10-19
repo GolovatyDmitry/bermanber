@@ -6,6 +6,19 @@ function gtag() { dataLayer.push(arguments); }
 gtag('js', new Date());
 gtag('config', 'G-N839GB0VHF');
 
+// Откуда пришёл посетитель — тест прикладывает это к результату (кабинет, письмо).
+// Запоминаем последний внешний заход: метки utm_* в ссылке или чужой сайт в referrer.
+// Переходы внутри сайта (главная → тест) и повторные прямые заходы источник не перезаписывают.
+(function () {
+  var q = new URLSearchParams(location.search), ref = '';
+  try { if (document.referrer && new URL(document.referrer).hostname.replace(/^www\./, '') !== location.hostname.replace(/^www\./, '')) ref = document.referrer; } catch (e) {}
+  try {
+    if (!q.get('utm_source') && !ref && localStorage.getItem('src')) return;
+    localStorage.setItem('src', JSON.stringify({ utm_source: q.get('utm_source') || '', utm_medium: q.get('utm_medium') || '',
+      utm_campaign: q.get('utm_campaign') || '', referrer: ref }));
+  } catch (e) {} // хранилище недоступно (приватный режим) — источник просто не запишется
+})();
+
 var GA_LINKS = { 'wa.me': 'whatsapp', 't.me': 'telegram', 'instagram.com': 'instagram', 'threads.com': 'threads' };
 document.addEventListener('click', function (e) {
   var a = e.target.closest && e.target.closest('a[href]');
