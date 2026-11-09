@@ -15,6 +15,7 @@
 <link rel="alternate" hreflang="ru" href="https://bermanber.com/test/">
 <link rel="alternate" hreflang="en" href="https://bermanber.com/test/?lang=en">
 <link rel="alternate" hreflang="he" href="https://bermanber.com/test/?lang=he">
+<link rel="alternate" hreflang="x-default" href="https://bermanber.com/test/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -317,6 +318,10 @@
     document.getElementById("home-name").textContent = L.name;
     document.getElementById("home").href = "../" + (LANG === "ru" ? "" : "?lang=" + LANG);
     document.querySelectorAll("[data-lang]").forEach(function(b){ b.setAttribute("aria-pressed", b.dataset.lang === LANG); });
+    // canonical — у каждой языковой версии свой адрес (?lang=), иначе Google считает ?lang=en копией /test/
+    var c = document.querySelector("link[rel=canonical]");
+    if (!c) { c = document.createElement("link"); c.rel = "canonical"; document.head.appendChild(c); }
+    c.href = document.querySelector("link[hreflang=\"" + LANG + "\"]").href;
   }
   document.querySelectorAll("[data-lang]").forEach(function(b){
     b.onclick = function(){
