@@ -4,7 +4,18 @@
 window.dataLayer = window.dataLayer || [];
 function gtag() { dataLayer.push(arguments); }
 gtag('js', new Date());
-gtag('config', 'G-N839GB0VHF');
+// Свои визиты (Ксения, Дмитрий): один раз открыть bermanber.com/?internal=1 на каждом устройстве и в каждом браузере
+// (ссылка есть в кабинете). Дальше GA помечает визиты traffic_type=internal, фильтр «Internal Traffic» их отбрасывает.
+// Снять метку — ?internal=0. Приватный режим метку не помнит.
+var gaInternal = '';
+try {
+  var gaFlag = new URLSearchParams(location.search).get('internal');
+  if (gaFlag === '1') localStorage.setItem('internal', '1');
+  if (gaFlag === '0') localStorage.removeItem('internal');
+  if (gaFlag !== null) history.replaceState(null, '', location.pathname + location.search.replace(/[?&]internal=[01]/, '').replace(/^&/, '?') + location.hash);
+  gaInternal = localStorage.getItem('internal');
+} catch (e) {}
+gtag('config', 'G-N839GB0VHF', gaInternal ? { traffic_type: 'internal' } : {});
 
 // Откуда пришёл посетитель — тест прикладывает это к результату (кабинет, письмо).
 // Запоминаем последний внешний заход: метки utm_* в ссылке или чужой сайт в referrer.
